@@ -8,21 +8,27 @@
   
   .feed-title {
     font-size: 32px;
-    color: #ff3300;
+    font-weight: bold;
+    color: #ff3300; /* Яркий красный */
     text-align: center;
     margin-bottom: 30px;
-    text-decoration: underline wavy #00ff00;
-    letter-spacing: 5px;
-    /* Добавлен отступ для улучшения доступности */
-    padding: 10px;
+    text-shadow: 3px 3px 0 #000000, -1px -1px 0 #ffff00; /* Двойная тень */
+    background-color: rgba(0, 0, 0, 0.7); /* Черная подложка */
+    padding: 15px;
+    border-radius: 10px;
+    border: 5px double #00ffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   /* Создание нового поста */
   .new-post {
-    background-color: #ccff00;
+    background-color: rgba(204, 255, 0, 0.7); /* Более прозрачный фон */
     padding: 20px;
     margin-bottom: 30px;
     border: 5px dashed #9900cc;
+    border-radius: 10px;
   }
   
   .post-input {
@@ -30,47 +36,40 @@
     height: 100px;
     padding: 15px;
     margin-bottom: 15px;
-    background-color: #ffff99;
-    border: 3px dotted red;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #000000; /* Чёрный фон */
+    color: #00ff00; /* Зелёный текст */
+    border: 3px dotted #ff00ff; /* Фиолетовая рамка */
     font-size: 18px;
-    color: #000066;
     resize: vertical;
+    font-family: 'Arial', sans-serif; /* Более читаемый шрифт */
   }
   
   .post-actions {
     display: flex;
     justify-content: space-between;
-    /* Добавлен отступ между кнопками */
     gap: 10px;
   }
   
-  .post-button {
+  .post-button, .cancel-button {
     padding: 12px 25px;
-    background-color: #ff00ff;
-    color: white;
-    border: none;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
+    min-width: 120px;
+    min-height: 44px;
     text-transform: uppercase;
-    /* Минимальные размеры для лучшей доступности */
-    min-width: 100px;
-    min-height: 40px;
+    border: 3px solid #000000;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .post-button {
+    background-color: #ff00ff; /* Фиолетовый */
+    color: white;
   }
   
   .cancel-button {
-    padding: 12px 25px;
-    background-color: #666666;
+    background-color: #666666; /* Серый */
     color: white;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    text-transform: uppercase;
-    /* Минимальные размеры для лучшей доступности */
-    min-width: 100px;
-    min-height: 40px;
   }
   
   /* Опции сортировки */
@@ -78,27 +77,32 @@
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
-    gap: 15px; /* Увеличен отступ между кнопками */
+    gap: 15px;
   }
   
   .sort-button {
     padding: 10px 20px;
-    background-color: #00ccff;
-    color: #000000;
-    border: 2px solid #000000;
+    background-color: #00ccff; /* Голубой фон */
+    color: #000000; /* Черный текст */
+    border: 3px solid #ff3300; /* Красная рамка */
     cursor: pointer;
     font-weight: bold;
+    font-size: 18px;
+    text-transform: uppercase;
     transform: skewX(-10deg);
-    /* Минимальные размеры */
-    min-width: 80px;
-    min-height: 40px;
+    min-width: 120px; /* Минимальная ширина */
+    min-height: 44px; /* Минимальная высота для удобства нажатия */
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    margin: 0 5px; /* Промежутки между кнопками */
   }
   
   .sort-button.active {
-    background-color: #ff3300;
+    background-color: #ff3300; /* Красный фон для активной */
     color: white;
-    border: 2px solid yellow;
-    box-shadow: 0 0 10px red;
+    border: 3px solid #ffff00; /* Желтая рамка */
+    box-shadow: 0 0 15px red;
+    text-shadow: 1px 1px 0 #000000; /* Черная тень для белого текста */
   }
   
   /* Контейнер постов */
@@ -106,19 +110,16 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    /* Добавлен внутренний отступ */
     padding: 5px;
   }
   
   .post-card {
-    background-color: white;
-    border: 4px solid #ff00ff;
-    padding: 20px;
-    box-shadow: 8px 8px 0 #00ffff, 16px 16px 0 #ffff00;
+    background-color: rgba(51, 51, 51, 0.85); /* Более темный, но прозрачный фон */
+    border: 6px solid #ff3300; /* Яркая рамка */
+    padding: 15px;
+    margin-bottom: 25px;
     position: relative;
     overflow: hidden;
-    /* Обеспечиваем доступность содержимого */
-    margin-bottom: 25px;
   }
   
   .post-card::before {
@@ -140,7 +141,6 @@
     margin-bottom: 15px;
     position: relative;
     z-index: 1;
-    /* Добавлен отступ */
     padding: 5px;
   }
   
@@ -164,16 +164,29 @@
   }
   
   .post-username {
-    font-size: 20px;
-    color: #9900cc;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff00ff; /* Яркий цвет */
+    text-shadow: 2px 2px 0 #000000; /* Более заметная тень */
     margin: 0;
-    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(0, 0, 0, 0.5); /* Темная подложка */
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    font-family: 'Impact', 'Arial Black', sans-serif; /* Более читаемый шрифт */
   }
   
   .post-date {
-    font-size: 14px;
-    color: #666666;
-    font-style: italic;
+    font-size: 16px;
+    background-color: rgba(102, 0, 204, 0.8); /* Яркий фон */
+    color: #ffff00; /* Контрастный цвет */
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    text-shadow: 1px 1px 0 #000;
+    border: 1px solid #ff00ff;
+    font-weight: bold;
   }
   
   .post-menu {
@@ -182,7 +195,6 @@
     font-size: 24px;
     cursor: pointer;
     color: #666666;
-    /* Увеличен для доступности */
     min-width: 40px;
     min-height: 40px;
     padding: 5px;
@@ -193,15 +205,21 @@
     margin-bottom: 20px;
     position: relative;
     z-index: 1;
-    /* Добавлен отступ */
     padding: 5px;
   }
   
   .post-content p {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1.6;
-    color: #111111;
+    color: #ffffff; /* Белый текст */
     margin-bottom: 15px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.9); /* Сильная черная тень */
+    background-color: rgba(0, 0, 0, 0.5); /* Черная подложка */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 0, 255, 0.3);
+    font-family: 'Arial', 'Helvetica', sans-serif; /* Более читаемый шрифт */
+    letter-spacing: 0.5px;
   }
   
   .post-image {
@@ -221,91 +239,107 @@
     padding-top: 15px;
     position: relative;
     z-index: 1;
-    /* Добавлен отступ */
     padding: 10px 5px;
   }
   
   .post-stats {
     display: flex;
-    gap: 25px; /* Увеличено расстояние между кнопками */
+    gap: 25px;
   }
   
   .likes, .dislikes, .comments {
     display: flex;
     align-items: center;
-    gap: 8px; /* Увеличен отступ */
+    gap: 8px;
   }
   
   .like-button, .dislike-button, .comment-button {
-    background: none;
+    background: rgba(0, 0, 0, 0.5); /* Темный фон */
     border: none;
-    font-size: 20px;
+    font-size: 24px; /* Увеличен размер */
     cursor: pointer;
     transition: transform 0.3s;
-    /* Увеличены для доступности */
-    min-width: 40px;
-    min-height: 40px;
-    padding: 5px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
   }
   
   .like-button:hover, .dislike-button:hover, .comment-button:hover {
     transform: scale(1.2);
+    background-color: rgba(255, 0, 255, 0.3);
   }
   
   .like-count, .dislike-count, .comment-count {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
   }
   
   .like-count {
-    color: #ff0000;
+    color: #ff0000; /* Красный для лайков */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 0 #000;
   }
   
   .dislike-count {
-    color: #9900cc;
+    color: #ff00ff; /* Фиолетовый для дизлайков */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 0 #000;
   }
   
   .comment-count {
-    color: #ff6600;
+    color: #ff9900; /* Оранжевый для комментариев */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 5px;
+    text-shadow: 1px 1px 0 #000;
   }
   
   /* Кнопка поделиться */
   .share-button {
-    padding: 10px 18px; /* Увеличены отступы */
-    background-color: #00ccff;
-    color: white;
-    border: none;
+    padding: 10px 20px;
+    background-color: #00ccff; /* Яркий цвет фона */
+    color: #000000; /* Черный текст */
+    border: 3px solid #ffff00; /* Яркая рамка */
     border-radius: 20px;
     font-weight: bold;
+    font-size: 18px; /* Увеличен размер */
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 14px;
-    /* Минимальные размеры для доступности */
-    min-width: 100px;
-    min-height: 40px;
+    min-width: 150px;
+    min-height: 44px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5); /* Светлая тень для темного фона */
   }
   
   /* Загрузить больше */
   .load-more {
-    text-align: center;
     margin-top: 30px;
-    /* Добавлен отступ снизу */
     margin-bottom: 20px;
+    text-align: center;
   }
   
   .load-more-button {
     padding: 15px 30px;
-    background-color: #ff6600;
+    background-color: #ff6600; /* Оранжевый */
     color: white;
-    border: 3px double #ffff00;
-    font-size: 18px;
+    border: 4px double #ffff00; /* Желтая рамка */
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
-    box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
-    /* Минимальные размеры */
-    min-width: 200px;
-    min-height: 50px;
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+    min-width: 250px;
+    min-height: 60px;
+    text-shadow: 2px 2px 0 #000000;
+    letter-spacing: 1px;
+    border-radius: 8px;
   }
   
   /* Анимации и эффекты для постов */
@@ -344,169 +378,315 @@
       justify-content: space-between;
     }
   }
-
-/* Стили для функции "Подумай еще раз" */
-
-/* Контейнер для функции "Подумай еще раз" */
-.think-again-container {
-  background-color: rgba(255, 0, 0, 0.2);
-  border: 4px dashed #ff0000;
-  padding: 15px;
-  margin: 15px 0;
-  animation: pulse-border 1.2s infinite;
-  position: relative;
-}
-
-@keyframes pulse-border {
-  0% { border-color: #ff0000; }
-  50% { border-color: #ffff00; }
-  100% { border-color: #ff0000; }
-}
-
-/* Предупреждение об удалении */
-.think-again-warning {
-  color: #ff0000;
-  font-size: 18px;
-  text-align: center;
-  margin-bottom: 15px;
-  font-weight: bold;
-  text-shadow: 2px 2px #000000;
-  transform: skew(-5deg, 2deg);
-  padding: 10px;
-  background-color: #ffff00;
-  box-shadow: 0 0 15px #ff00ff;
-}
-
-/* Прогресс подтверждения */
-.confirmation-progress {
-  background-color: #333333;
-  height: 20px;
-  position: relative;
-  margin-bottom: 15px;
-  border: 2px solid #00ffff;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
-  background-size: 400% 400%;
-  animation: gradient-move 3s ease infinite;
-  transition: width 0.3s;
-}
-
-@keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.progress-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 1px black;
-  font-size: 12px;
-}
-
-/* Кнопки подтверждения */
-.confirmation-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.confirm-button {
-  padding: 10px 8px;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: #ff6600;
-  color: white;
-  border: 3px solid #ffff00;
-  cursor: pointer;
-  min-width: 45%;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.confirm-button::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
-  background-size: 400% 400%;
-  animation: gradient-move 3s ease infinite;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.confirm-button:hover::before {
-  opacity: 0.8;
-}
-
-.confirm-button.confirmed {
-  background-color: #009900;
-  color: white;
-  border-color: #00ff00;
-  transform: scale(0.95) rotate(0deg);
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-.confirm-button.disabled {
-  background-color: #666666;
-  color: #aaaaaa;
-  border-color: #999999;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.confirm-button.available:hover {
-  transform: scale(1.05) rotate(2deg);
-}
-
-.confirm-button.available:active {
-  transform: scale(0.95);
-}
-
-/* Анимация для кнопок подтверждения */
-@keyframes wiggle {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-3deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(3deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.confirm-button.available {
-  animation: wiggle 1s infinite;
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 600px) {
+  
+  /* Стили для функции "Подумай еще раз" */
+  
+  /* Контейнер для функции "Подумай еще раз" */
+  .think-again-container {
+    background-color: rgba(255, 0, 0, 0.3);
+    border: 4px dashed #ff0000;
+    padding: 15px;
+    margin: 15px 0;
+    animation: pulse-border 1.2s infinite;
+    position: relative;
+    border-radius: 8px;
+  }
+  
+  @keyframes pulse-border {
+    0% { border-color: #ff0000; }
+    50% { border-color: #ffff00; }
+    100% { border-color: #ff0000; }
+  }
+  
+  /* Предупреждение об удалении */
+  .think-again-warning {
+    color: #ffffff; /* Белый текст */
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 2px 2px 3px #000000; /* Усиленная тень */
+    transform: skew(-5deg, 2deg);
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.7); /* Красный полупрозрачный фон */
+    border-radius: 8px;
+    border: 2px solid #ffff00; /* Жёлтая рамка */
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    letter-spacing: 1px;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+  }
+  
+  /* Прогресс подтверждения */
+  .confirmation-progress {
+    background-color: #333333;
+    height: 20px;
+    position: relative;
+    margin-bottom: 15px;
+    border: 2px solid #00ffff;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
+    background-size: 400% 400%;
+    animation: gradient-move 3s ease infinite;
+    transition: width 0.3s;
+  }
+  
+  @keyframes gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .progress-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Кнопки подтверждения */
   .confirmation-buttons {
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
   
   .confirm-button {
-    width: 100%;
-    min-width: auto;
+    padding: 10px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ff6600;
+    color: white;
+    border: 3px solid #ffff00;
+    cursor: pointer;
+    min-width: 45%;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px #000000;
+    text-align: center;
+    min-height: 44px; /* Минимальная высота для удобства нажатия */
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
-  .think-again-warning {
-    font-size: 14px;
+  .confirm-button::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
+    background-size: 400% 400%;
+    animation: gradient-move 3s ease infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-}
+  
+  .confirm-button:hover::before {
+    opacity: 0.8;
+  }
+  
+  .confirm-button.confirmed {
+    background-color: #009900;
+    color: white;
+    border-color: #00ff00;
+    transform: scale(0.95) rotate(0deg);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  
+  .confirm-button.disabled {
+    background-color: #666666;
+    color: #dddddd; /* Светло-серый текст */
+    border-color: #999999;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .confirm-button.available:hover {
+    transform: scale(1.05) rotate(2deg);
+  }
+  
+  .confirm-button.available:active {
+    transform: scale(0.95);
+  }
+  
+  /* Анимация для кнопок подтверждения */
+  @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  .confirm-button.available {
+    animation: wiggle 1s infinite;
+  }
+  
+  /* Стили для модального окна с анализом оскорбительного контента */
+  .offensive-content-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 255, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: background-pulse 1s infinite alternate;
+  }
+  
+  @keyframes background-pulse {
+    from { background-color: rgba(255, 0, 255, 0.7); }
+    to { background-color: rgba(255, 255, 0, 0.7); }
+  }
+  
+  .offensive-content-box {
+    width: 80%;
+    max-width: 600px;
+    background: repeating-linear-gradient(45deg, #ff0000, #ff00ff 20px, #ffff00 20px, #00ff00 40px);
+    border: 15px ridge #00ffff;
+    padding: 20px;
+    color: white;
+    text-shadow: 2px 2px 0 #000000; /* Более простая тень для читаемости */
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    animation: rotate-box 3s infinite alternate;
+    box-shadow: 0 0 50px #ff00ff;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.6;
+  }
+  
+  @keyframes rotate-box {
+    0% { transform: rotate(-3deg) scale(1); }
+    50% { transform: rotate(3deg) scale(1.05); }
+    100% { transform: rotate(-3deg) scale(1); }
+  }
+  
+  .offensive-content-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/50') repeat;
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .offensive-title {
+    font-size: 28px;
+    color: #ffff00;
+    margin-bottom: 20px;
+    animation: blink-text 1.5s infinite; /* Замедлено для читаемости */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: rgba(0, 0, 0, 0.7); /* Тёмный фон для лучшей читаемости */
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  @keyframes blink-text {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  
+  .offensive-message {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .offensive-content-box p {
+    margin: 10px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .offensive-button {
+    background-color: #ff0000;
+    color: white;
+    border: 5px double #ffff00;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    animation: button-pulse 1s infinite alternate;
+    margin-top: 20px;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    border-radius: 5px;
+    text-shadow: 1px 1px 2px #000000;
+    min-height: 44px;
+  }
+  
+  @keyframes button-pulse {
+    from { transform: scale(1); background-color: #ff0000; }
+    to { transform: scale(1.1); background-color: #ff00ff; }
+  }
+  
+  /* Emoji decoration */
+  .emoji-decoration {
+    position: absolute;
+    font-size: 30px;
+    animation: float-emoji 3s infinite ease-in-out;
+  }
+  
+  .emoji-1 { top: 10px; left: 10px; animation-delay: 0s; }
+  .emoji-2 { top: 10px; right: 10px; animation-delay: 0.5s; }
+  .emoji-3 { bottom: 10px; left: 10px; animation-delay: 1s; }
+  .emoji-4 { bottom: 10px; right: 10px; animation-delay: 1.5s; }
+  
+  @keyframes float-emoji {
+    0% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(20deg); }
+    100% { transform: translateY(0) rotate(0); }
+  }
+  
+  /* Добавляем класс shake для использования в модальном окне */
+  .shake {
+    animation: shake-effect 0.5s infinite;
+  }
+  
+  @keyframes shake-effect {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }

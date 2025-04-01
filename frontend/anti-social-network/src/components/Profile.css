@@ -17,19 +17,20 @@
   }
   
   .profile-title {
-    font-size: 48px;
+    font-size: 36px;
     text-align: center;
     color: #ffff00;
     text-shadow: 
-      5px 5px 0 #ff0000,
-      -5px -5px 0 #0000ff,
-      10px 10px 10px rgba(0, 0, 0, 0.5);
+      3px 3px 0 #ff0000,
+      -3px -3px 0 #0000ff,
+      5px 5px 5px rgba(0, 0, 0, 0.5);
     transform: rotate(-3deg);
     margin-bottom: 40px;
-    letter-spacing: 8px;
+    letter-spacing: 5px;
     background-color: #000000;
     padding: 15px;
     border: 8px ridge #00ff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .profile-content {
@@ -119,6 +120,7 @@
     cursor: pointer;
     text-shadow: 2px 2px 4px #000000;
     transform: rotate(-5deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .profile-avatar-wrapper:hover .avatar-overlay {
@@ -145,6 +147,7 @@
     margin-bottom: 15px;
     font-size: 24px;
     text-shadow: 2px 2px 0 #0000ff;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .avatar-error {
@@ -155,6 +158,8 @@
     font-weight: bold;
     border: 2px solid black;
     text-align: center;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .form-errors {
@@ -168,6 +173,8 @@
     margin-bottom: 5px;
     font-size: 14px;
     border: 2px dotted #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .avatar-input {
@@ -178,14 +185,20 @@
     color: #00ff00;
     font-size: 16px;
     margin-bottom: 10px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .avatar-help {
-    font-size: 12px;
+    font-size: 14px;
     color: #ffcc00;
     margin-bottom: 15px;
     text-align: center;
     font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
   }
   
   .avatar-buttons {
@@ -200,6 +213,8 @@
     cursor: pointer;
     min-width: 120px;
     border: 3px solid #000000;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .avatar-submit {
@@ -226,8 +241,9 @@
     font-size: 32px;
     color: #ff00ff;
     margin-bottom: 10px;
-    text-shadow: 3px 3px 0 #00ffff;
+    text-shadow: 2px 2px 0 #00ffff;
     letter-spacing: 3px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .profile-email {
@@ -235,12 +251,24 @@
     font-size: 18px;
     margin-bottom: 10px;
     font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .profile-date {
     color: #00ffff;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 15px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   /* Статус пользователя */
@@ -266,12 +294,15 @@
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .status-edit-hint {
-    font-size: 12px;
+    font-size: 14px;
     color: #cccccc;
     font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   /* Форма редактирования статуса */
@@ -289,6 +320,7 @@
     height: 80px;
     margin-bottom: 10px;
     resize: none;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .status-buttons {
@@ -303,6 +335,8 @@
     cursor: pointer;
     width: 48%;
     border: 2px solid #000000;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .status-save-btn {
@@ -330,18 +364,24 @@
     flex-direction: column;
     align-items: center;
     color: white;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
   }
   
   .stats-count {
     font-size: 28px;
     font-weight: bold;
     color: #ffff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .stats-label {
-    font-size: 14px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   /* Интересы пользователя */
@@ -359,6 +399,11 @@
     margin-bottom: 15px;
     text-shadow: 2px 2px 0 #000000;
     transform: skew(-5deg);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .interests-list {
@@ -374,6 +419,8 @@
     font-weight: bold;
     border: 2px dotted #00ffff;
     text-align: center;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .interest-item:nth-child(odd) {
@@ -392,6 +439,8 @@
     font-style: italic;
     background-color: #000000;
     border: 2px dashed #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   /* Правая колонка профиля */
@@ -416,6 +465,7 @@
     background-color: #330066;
     padding: 10px;
     border: 5px dashed #ffff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .no-posts {
@@ -426,6 +476,8 @@
     font-size: 18px;
     font-weight: bold;
     border: 3px dashed #ff00ff;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   /* Карточки постов пользователя */
@@ -500,6 +552,8 @@
     padding: 5px 10px;
     border: 2px solid #ff00ff;
     transform: rotate(-3deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .post-actions {
@@ -509,10 +563,13 @@
   
   .post-delete-btn, .post-edit-btn {
     padding: 8px;
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     border: 2px solid #000000;
     min-width: 80px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    font-weight: bold;
   }
   
   .post-delete-btn {
@@ -536,6 +593,11 @@
     color: #ffffff;
     line-height: 1.5;
     margin-bottom: 15px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 5px;
   }
   
   .post-image-container {
@@ -585,6 +647,11 @@
     font-size: 14px;
     font-weight: bold;
     color: #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px 5px;
+    border-radius: 3px;
   }
   
   .post-share-btn {
@@ -595,6 +662,9 @@
     border: 2px solid #00ffff;
     cursor: pointer;
     transform: skew(-5deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    min-height: 40px;
   }
   
   /* Форма создания нового поста */
@@ -613,6 +683,11 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 2px 2px 0 #000000;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .new-post-input {
@@ -625,6 +700,7 @@
     font-size: 16px;
     margin-bottom: 15px;
     resize: none;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .post-form-actions {
@@ -639,6 +715,10 @@
     cursor: pointer;
     border: 3px solid #000000;
     flex: 1;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    font-size: 16px;
+    min-height: 44px;
   }
   
   .new-post-submit {
@@ -680,6 +760,9 @@
     cursor: pointer;
     z-index: 1000;
     font-size: 16px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    line-height: 24px; /* Центрирование X */
+    text-align: center;
   }
   
   .ad-title {
@@ -689,6 +772,7 @@
     margin-bottom: 15px;
     text-shadow: 2px 2px 0 #ff0000;
     letter-spacing: 3px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .ad-text {
@@ -696,6 +780,9 @@
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    line-height: 1.4;
   }
   
   .ad-image-container {
@@ -730,50 +817,14 @@
     letter-spacing: 2px;
     margin-top: 10px;
     animation: pulse-button 2s infinite;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   @keyframes pulse-button {
     0% { transform: scale(1); background-color: #00ff00; }
     50% { transform: scale(1.05); background-color: #ffff00; }
     100% { transform: scale(1); background-color: #00ff00; }
-  }
-  
-  /* Анимации для всей страницы профиля */
-  .tilted {
-    transform: rotate(-3deg);
-  }
-  
-  .upside-down {
-    transform: rotate(180deg);
-    display: inline-block;
-  }
-  
-  .sideways {
-    transform: rotate(90deg);
-    display: inline-block;
-    transform-origin: left;
-    margin-left: 40px;
-  }
-  
-  .glitch {
-    position: relative;
-    animation: glitch 1.5s infinite;
-  }
-  
-  @keyframes glitch {
-    0% { transform: none; opacity: 1; }
-    7% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
-    10% { transform: none; opacity: 1; }
-    27% { transform: none; opacity: 1; }
-    30% { transform: skew(0.8deg, -0.1deg); opacity: 0.75; }
-    35% { transform: none; opacity: 1; }
-    52% { transform: none; opacity: 1; }
-    55% { transform: skew(-1deg, 0.2deg); opacity: 0.75; }
-    50% { transform: none; opacity: 1; }
-    72% { transform: none; opacity: 1; }
-    75% { transform: skew(0.4deg, 1deg); opacity: 0.75; }
-    80% { transform: none; opacity: 1; }
-    100% { transform: none; opacity: 1; }
   }
   
   /* Адаптивность для мобильных устройств */
