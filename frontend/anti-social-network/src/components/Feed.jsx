@@ -1,16 +1,54 @@
 import { useState, useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import OffensiveContentModal from './OffensiveContentModal'
-import { getRandomPosts, createPost, getNotification } from '../api'
 import './Feed.css'
 
 function Feed() {
   const { isAuthenticated, user, setShowAuth } = useContext(AuthContext);
   const [postText, setPostText] = useState('');
-  const [postTitle, setPostTitle] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [notification, setNotification] = useState('');
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      username: 'ТролльИнтернета69',
+      avatar: 'https://via.placeholder.com/50',
+      content: 'Всем привет! Это моя первая публикация в этой ужасной соцсети! Надеюсь, вам НЕ понравится!',
+      likes: -15,
+      dislikes: 203,
+      comments: 42,
+      date: '01.04.2025',
+      // Добавляем поля для функции "Подумай еще раз"
+      confirmations: 5, // Уже подтверждено
+      timeLeft: 0, // Время до удаления
+      confirmed: true // Пост уже подтвержден
+    },
+    {
+      id: 2,
+      username: 'АнТи_СоЦиАл2000',
+      avatar: 'https://via.placeholder.com/50',
+      content: 'НЕ делитесь этим постом!!! Нажмите дизлайк и удалите свой аккаунт!',
+      likes: -42,
+      dislikes: 567,
+      comments: 13,
+      date: '31.03.2025',
+      confirmations: 5,
+      timeLeft: 0,
+      confirmed: true
+    },
+    {
+      id: 3,
+      username: 'КиберАнархист',
+      avatar: 'https://via.placeholder.com/50',
+      content: 'Вот моя фотография идеального дня в антисоциальной сети! НИКОМУ НЕ ПОКАЗЫВАЙТЕ!!!',
+      image: 'https://via.placeholder.com/400x300',
+      likes: -7,
+      dislikes: 89,
+      comments: 23,
+      date: '30.03.2025',
+      confirmations: 5,
+      timeLeft: 0,
+      confirmed: true
+    }
+  ]);
   
   // Добавляем новое состояние для модального окна анализа контента
   const [analysisMessage, setAnalysisMessage] = useState('');
@@ -18,104 +56,6 @@ function Feed() {
 
   // Ссылка для хранения идентификаторов таймеров
   const timersRef = useRef({});
-  
-  // Для отслеживания, смонтирован ли компонент
-  const isMounted = useRef(true);
-  
-  // Загрузка случайных постов при монтировании
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoading(true);
-        // Случайно выбираем между 3 и 10 постами
-        const randomCount = Math.floor(Math.random() * 7) + 3;
-        const randomPosts = await getRandomPosts(randomCount);
-        
-        if (isMounted.current) {
-          // Преобразуем посты из API формата в формат компонента
-          const formattedPosts = randomPosts.map((post, index) => ({
-            id: Date.now() + index,
-            username: `АнТи_СоЦиАл${Math.floor(Math.random() * 9000) + 1000}`,
-            avatar: `https://via.placeholder.com/50/${Math.floor(Math.random() * 16777215).toString(16)}`,
-            content: post.описание || 'Бессмысленный пост без описания',
-            title: post.название || 'Без названия',
-            image: post.фотки || (Math.random() < 0.3 ? 'https://via.placeholder.com/400x300' : ''),
-            likes: -Math.floor(Math.random() * 50),
-            dislikes: Math.floor(Math.random() * 500) + 50,
-            comments: Math.floor(Math.random() * 100),
-            date: new Date().toLocaleDateString(),
-            confirmations: 5,
-            timeLeft: 0,
-            confirmed: true
-          }));
-          
-          setPosts(formattedPosts);
-          setLoading(false);
-          
-          // 30% шанс показать раздражающее уведомление о загрузке постов
-          if (Math.random() < 0.3) {
-            setTimeout(() => {
-              alert(`ЗАГРУЖЕНО ${randomPosts.length} УЖАСНЫХ ПОСТОВ! ПРИЯТНОГО ПРОСМОТРА!`);
-            }, 1000);
-          }
-        }
-      } catch (error) {
-        console.error('ОШИБКА ЗАГРУЗКИ ПОСТОВ:', error);
-        if (isMounted.current) {
-          setLoading(false);
-          alert('ОШИБКА ЗАГРУЗКИ ПОСТОВ! СЕРВЕР НЕДОСТУПЕН!');
-        }
-      }
-    };
-    
-    fetchPosts();
-    
-    // Периодически получаем уведомления, если пользователь авторизован
-    let notificationInterval;
-    if (isAuthenticated && user) {
-      const fetchNotification = async () => {
-        try {
-          const notification = await getNotification(user.login);
-          if (isMounted.current) {
-            setNotification(notification);
-            
-            // 20% шанс показать уведомление как alert
-            if (Math.random() < 0.2) {
-              alert(`НОВОЕ УВЕДОМЛЕНИЕ: ${notification}`);
-            }
-          }
-        } catch (error) {
-          console.error('ОШИБКА ПОЛУЧЕНИЯ УВЕДОМЛЕНИЯ:', error);
-        }
-      };
-      
-      // Первое уведомление через 5 секунд
-      setTimeout(fetchNotification, 5000);
-      
-      // Затем каждые 20-30 секунд
-      notificationInterval = setInterval(fetchNotification, Math.random() * 10000 + 20000);
-    }
-    
-    return () => {
-      isMounted.current = false;
-      clearInterval(notificationInterval);
-      
-      // Очищаем все таймеры при размонтировании компонента
-      Object.values(timersRef.current).forEach(timer => {
-        clearInterval(timer);
-      });
-    };
-  }, [isAuthenticated, user]);
-
-  // Эффект для очистки таймеров при размонтировании компонента
-  useEffect(() => {
-    return () => {
-      // Очищаем все таймеры при размонтировании компонента
-      Object.values(timersRef.current).forEach(timer => {
-        clearInterval(timer);
-      });
-    };
-  }, []);
 
   // Функция для "анализа" контента поста и нахождения в нем "оскорбительного" содержимого
   const analyzePostContent = (content) => {
@@ -178,6 +118,57 @@ function Feed() {
 Рекомендация: ${randomRecommendation}.
 
 Ваш пост все равно опубликован, но вы занесены в список потенциально опасных пользователей.`;
+  };
+
+  // Эффект для очистки таймеров при размонтировании компонента
+  useEffect(() => {
+    return () => {
+      // Очищаем все таймеры при размонтировании компонента
+      Object.values(timersRef.current).forEach(timer => {
+        clearInterval(timer);
+      });
+    };
+  }, []);
+
+  // Обработчик создания нового поста
+  const handleNewPost = () => {
+    if (!isAuthenticated) {
+      alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ, ЧТОБЫ СОЗДАВАТЬ ПОСТЫ!');
+      setShowAuth(true);
+      return;
+    }
+    
+    if (!postText.trim()) {
+      alert('НЕЛЬЗЯ ПУБЛИКОВАТЬ ПУСТОТУ! ХОТЯ ПОЧЕМУ БЫ И НЕТ?');
+      return;
+    }
+    
+    // Создаем новый пост с параметрами для функции "Подумай еще раз"
+    const newPost = {
+      id: Date.now(),
+      username: user.login,
+      avatar: 'https://via.placeholder.com/50',
+      content: postText,
+      likes: Math.floor(Math.random() * -10),
+      dislikes: Math.floor(Math.random() * 50) + 20,
+      comments: 0,
+      date: new Date().toLocaleDateString(),
+      confirmations: 0, // Ещё нет подтверждений
+      timeLeft: 30, // 30 секунд до удаления
+      confirmed: false // Пост не подтвержден
+    };
+    
+    // Добавляем пост в начало списка
+    setPosts([newPost, ...posts]);
+    setPostText('');
+    
+    // Раздражающее сообщение после публикации
+    setTimeout(() => {
+      alert('ВАШ ПОСТ ОПУБЛИКОВАН! У ВАС ЕСТЬ 30 СЕКУНД ЧТОБЫ ПОДТВЕРДИТЬ ЕГО 5 РАЗ, ИНАЧЕ ОН БУДЕТ УДАЛЁН! ПОТОРОПИТЕСЬ!');
+    }, 500);
+
+    // Запускаем таймер удаления для нового поста
+    setupDeleteTimer(newPost.id);
   };
 
   // Функция для настройки таймера удаления поста
@@ -260,58 +251,6 @@ function Feed() {
       });
     });
   };
-
-  // Обработчик создания нового поста
-  const handleNewPost = async () => {
-    if (!isAuthenticated) {
-      alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ, ЧТОБЫ СОЗДАВАТЬ ПОСТЫ!');
-      setShowAuth(true);
-      return;
-    }
-    
-    if (!postText.trim() || !postTitle.trim()) {
-      alert('НЕЛЬЗЯ ПУБЛИКОВАТЬ ПУСТОТУ! ХОТЯ ПОЧЕМУ БЫ И НЕТ?');
-      return;
-    }
-    
-    try {
-      // Отправляем запрос на создание поста
-      const response = await createPost(user.login, postTitle, postText);
-      
-      // Создаем новый пост с параметрами для функции "Подумай еще раз"
-      const newPost = {
-        id: Date.now(),
-        username: user.login,
-        avatar: 'https://via.placeholder.com/50',
-        content: response.описание || postText,
-        title: response.название || postTitle,
-        image: response.фотки || '',
-        likes: Math.floor(Math.random() * -10),
-        dislikes: Math.floor(Math.random() * 50) + 20,
-        comments: 0,
-        date: new Date().toLocaleDateString(),
-        confirmations: 0, // Ещё нет подтверждений
-        timeLeft: 30, // 30 секунд до удаления
-        confirmed: false // Пост не подтвержден
-      };
-      
-      // Добавляем пост в начало списка
-      setPosts([newPost, ...posts]);
-      setPostText('');
-      setPostTitle('');
-      
-      // Раздражающее сообщение после публикации
-      setTimeout(() => {
-        alert('ВАШ ПОСТ ОПУБЛИКОВАН! У ВАС ЕСТЬ 30 СЕКУНД ЧТОБЫ ПОДТВЕРДИТЬ ЕГО 5 РАЗ, ИНАЧЕ ОН БУДЕТ УДАЛЁН! ПОТОРОПИТЕСЬ!');
-      }, 500);
-
-      // Запускаем таймер удаления для нового поста
-      setupDeleteTimer(newPost.id);
-    } catch (error) {
-      console.error('ОШИБКА СОЗДАНИЯ ПОСТА:', error);
-      alert('ОШИБКА СОЗДАНИЯ ПОСТА! СЕРВЕР ОТКЛОНИЛ ВАШ ШЕДЕВР!');
-    }
-  };
   
   // Функция для обработки лайков/дизлайков
   const handleReaction = (id, type) => {
@@ -349,25 +288,6 @@ function Feed() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="feed-container">
-        <h2 className="feed-title tilted">ЗАГРУЗКА БЕССМЫСЛЕННОГО КОНТЕНТА...</h2>
-        <div className="loading-spinner" style={{ textAlign: 'center', margin: '50px 0' }}>
-          <div className="spinner" style={{ 
-            display: 'inline-block',
-            width: '50px', 
-            height: '50px', 
-            border: '8px solid #ff00ff', 
-            borderTop: '8px solid #00ffff',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite' 
-          }}></div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="feed-container">
       {/* Модальное окно анализа контента */}
@@ -380,41 +300,7 @@ function Feed() {
       
       <h2 className="feed-title tilted">ЛЕНТА НЕЖЕЛАТЕЛЬНОГО КОНТЕНТА</h2>
       
-      {/* Покажем уведомление, если оно есть */}
-      {notification && (
-        <div className="notification-banner blink" style={{
-          background: 'linear-gradient(45deg, #ff0000, #ff00ff)',
-          padding: '15px',
-          margin: '20px 0',
-          borderRadius: '5px',
-          border: '3px dashed #00ffff',
-          color: 'white',
-          fontWeight: 'bold',
-          textAlign: 'center'
-        }}>
-          {notification}
-        </div>
-      )}
-      
       <div className="new-post">
-        <input
-          type="text"
-          placeholder={isAuthenticated 
-            ? "ВВЕДИТЕ НАЗВАНИЕ БЕССМЫСЛЕННОГО ПОСТА..." 
-            : "АВТОРИЗУЙТЕСЬ, ЧТОБЫ НАПИСАТЬ ПОСТ..."
-          }
-          className="post-input"
-          value={postTitle}
-          onChange={(e) => setPostTitle(e.target.value)}
-          disabled={!isAuthenticated}
-          onClick={() => {
-            if (!isAuthenticated) {
-              alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ, ЧТОБЫ ПИСАТЬ ПОСТЫ!');
-              setShowAuth(true);
-            }
-          }}
-          style={{ marginBottom: '10px' }}
-        />
         <textarea 
           placeholder={isAuthenticated 
             ? "НАПИШИТЕ ЧТО-ТО БЕССМЫСЛЕННОЕ..." 
@@ -435,7 +321,7 @@ function Feed() {
           <button 
             className="post-button blink" 
             onClick={handleNewPost}
-            disabled={!isAuthenticated || !postText.trim() || !postTitle.trim()}
+            disabled={!isAuthenticated || !postText.trim()}
           >
             ОПУБЛИКОВАТЬ!
           </button>
@@ -447,7 +333,6 @@ function Feed() {
                 alert('ОШИБКА ОЧИСТКИ! ПОПРОБУЙТЕ ЕЩЕ РАЗ!');
               } else {
                 setPostText('');
-                setPostTitle('');
               }
             }}
           >
@@ -484,14 +369,6 @@ function Feed() {
             </div>
             
             <div className="post-content">
-              <h4 style={{ 
-                color: '#ff00ff', 
-                marginBottom: '10px', 
-                textTransform: 'uppercase',
-                animation: 'blinker 1.5s linear infinite'
-              }}>
-                {post.title}
-              </h4>
               <p>{post.content}</p>
               {post.image && <img src={post.image} alt="Контент поста" className="post-image" />}
             </div>
@@ -601,50 +478,12 @@ function Feed() {
       <div className="load-more">
         <button 
           className="load-more-button wobble"
-          onClick={async () => {
+          onClick={() => {
             if (!isAuthenticated) {
               alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ, ЧТОБЫ ЗАГРУЗИТЬ БОЛЬШЕ КОНТЕНТА!');
               setShowAuth(true);
             } else {
-              try {
-                setLoading(true);
-                const randomCount = Math.floor(Math.random() * 5) + 1;
-                const newPosts = await getRandomPosts(randomCount);
-                
-                if (newPosts.length > 0) {
-                  // Преобразуем посты из API формата в формат компонента
-                  const formattedPosts = newPosts.map((post, index) => ({
-                    id: Date.now() + index,
-                    username: `АнТи_СоЦиАл${Math.floor(Math.random() * 9000) + 1000}`,
-                    avatar: `https://via.placeholder.com/50/${Math.floor(Math.random() * 16777215).toString(16)}`,
-                    content: post.описание || 'Бессмысленный пост без описания',
-                    title: post.название || 'Без названия',
-                    image: post.фотки || (Math.random() < 0.3 ? 'https://via.placeholder.com/400x300' : ''),
-                    likes: -Math.floor(Math.random() * 50),
-                    dislikes: Math.floor(Math.random() * 500) + 50,
-                    comments: Math.floor(Math.random() * 100),
-                    date: new Date().toLocaleDateString(),
-                    confirmations: 5,
-                    timeLeft: 0,
-                    confirmed: true
-                  }));
-                  
-                  setPosts(prev => [...prev, ...formattedPosts]);
-                  setLoading(false);
-                  
-                  // 50% шанс показать раздражающее сообщение
-                  if (Math.random() < 0.5) {
-                    alert(`ЗАГРУЖЕНО ЕЩЕ ${newPosts.length} УЖАСНЫХ ПОСТОВ! ЗАЧЕМ ВЫ ЭТО ДЕЛАЕТЕ?`);
-                  }
-                } else {
-                  setLoading(false);
-                  alert('БОЛЬШЕ ПОСТОВ НЕТ! НАСЛАЖДАЙТЕСЬ ТИШИНОЙ!');
-                }
-              } catch (error) {
-                console.error('ОШИБКА ЗАГРУЗКИ ДОПОЛНИТЕЛЬНЫХ ПОСТОВ:', error);
-                setLoading(false);
-                alert('ОШИБКА ЗАГРУЗКИ ПОСТОВ! СЕРВЕР ОТКАЗЫВАЕТСЯ С ВАМИ СОТРУДНИЧАТЬ!');
-              }
+              alert('БОЛЬШЕ КОНТЕНТА НЕТ! ИЛИ ЕСТЬ, НО МЫ ВАМ ЕГО НЕ ПОКАЖЕМ!');
             }
           }}
         >
@@ -655,4 +494,4 @@ function Feed() {
   )
 }
 
-export default Feed;
+export default Feed

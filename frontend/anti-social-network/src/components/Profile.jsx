@@ -1,6 +1,5 @@
-import { useState, useContext, useEffect, useRef } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { getUserPosts, uploadAvatar, getAvatar } from '../api'
 import './Profile.css'
 
 // Компонент для раздражающей рекламы в профиле
@@ -21,15 +20,13 @@ function AnnoyingAd({ onClose }) {
 }
 
 function Profile() {
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [showAd, setShowAd] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [userPosts, setUserPosts] = useState([]);
   
-  // Пример данных профиля (часть может обновляться с сервера)
+  // Пример данных профиля (будут получаться с бэкенда)
   const [profileData, setProfileData] = useState({
-    login: '',
-    email: '',
+    login: user?.login || 'ТестовыйПользователь',
+    email: user?.email || 'test@antisoc.net',
     registrationDate: '01.04.2025',
     status: 'НЕНАВИЖУ ЭТУ СОЦСЕТЬ!!!',
     avatarUrl: 'https://via.placeholder.com/150',
@@ -39,93 +36,61 @@ function Profile() {
     interests: ['Раздражать людей', 'Портить настроение', 'Писать капсом', 'НЕНАВИДЕТЬ ВСЁ'],
   });
   
+  // Посты пользователя
+  const [userPosts, setUserPosts] = useState([
+    {
+      id: 1,
+      content: 'МОЙ ПЕРВЫЙ ПОСТ В ЭТОЙ УЖАСНОЙ СОЦСЕТИ! НАДЕЮСЬ, НИКТО НЕ ПРОЧИТАЕТ!!!',
+      date: '01.04.2025',
+      likes: -24,
+      dislikes: 304,
+      comments: 0,
+    },
+    {
+      id: 2,
+      content: 'ПОЧЕМУ ТУТ НИЧЕГО НЕ РАБОТАЕТ??? ХУДШИЙ САЙТ В МИРЕ!!!',
+      date: '02.04.2025',
+      likes: -38,
+      dislikes: 127,
+      comments: 1,
+    },
+    {
+      id: 3,
+      content: 'КАК УДАЛИТЬ АККАУНТ ОТСЮДА??? ПОМОГИТЕ!!!',
+      date: '03.04.2025',
+      likes: -12,
+      dislikes: 253,
+      comments: 0,
+      image: 'https://via.placeholder.com/400x200',
+    }
+  ]);
+  
   // Состояния для смены аватара
   const [isChangingAvatar, setIsChangingAvatar] = useState(false);
   const [avatarError, setAvatarError] = useState('');
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
-  const [avatarFile, setAvatarFile] = useState(null);
   const [formErrors, setFormErrors] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedStatus, setEditedStatus] = useState('');
+  const [editedStatus, setEditedStatus] = useState(profileData.status);
   
-  // Реф для отслеживания монтирования компонента
-  const isMounted = useRef(true);
-  
-  // Очистка рефа при размонтировании
+  // Эффект для раздражающих функций
   useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-  
-  // Загрузка данных пользователя и постов при монтировании
-  useEffect(() => {
-    if (!isAuthenticated || !user) {
-      setLoading(false);
-      return;
-    }
-    
-    // Обновляем данные профиля
-    setProfileData(prev => ({
-      ...prev,
-      login: user.login,
-      email: user.email || 'unknown@antisoc.net',
-      avatarUrl: getAvatar(user.login) || 'https://via.placeholder.com/150'
-    }));
-    
-    setEditedStatus('НЕНАВИЖУ ЭТУ СОЦСЕТЬ!!!');
-    
-    // Загрузка постов пользователя
-    const fetchUserPosts = async () => {
-      try {
-        const posts = await getUserPosts(user.login);
-        
-        // Преобразуем посты из API формата
-        const formattedPosts = posts.map((post, index) => ({
-          id: index + 1,
-          content: post.описание || 'Пустой пост',
-          date: new Date().toLocaleDateString(),
-          title: post.название || 'Без названия',
-          image: post.фотки || (Math.random() < 0.3 ? 'https://via.placeholder.com/400x200' : ''),
-          likes: -Math.floor(Math.random() * 30),
-          dislikes: Math.floor(Math.random() * 300),
-          comments: Math.floor(Math.random() * 20),
-        }));
-        
-        if (isMounted.current) {
-          setUserPosts(formattedPosts);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('ОШИБКА ЗАГРУЗКИ ПОСТОВ ПОЛЬЗОВАТЕЛЯ:', error);
-        if (isMounted.current) {
-          setLoading(false);
-        }
-      }
-    };
-    
-    fetchUserPosts();
-    
     // Раздражающее уведомление при первой загрузке
     const initialTimeout = setTimeout(() => {
-      if (isMounted.current) {
-        alert('ВАШ ПРОФИЛЬ ВЫГЛЯДИТ УЖАСНО! ТАК И ЗАДУМАНО!');
-      }
+      alert('ВАШ ПРОФИЛЬ ВЫГЛЯДИТ УЖАСНО! ТАК И ЗАДУМАНО!');
     }, 1500);
     
     // Случайные смещения элементов на странице
     const moveInterval = setInterval(() => {
       const elements = document.querySelectorAll('.profile-block, .profile-stats-item, .post-card');
-      if (Math.random() < 0.3 && isMounted.current) {
+      if (Math.random() < 0.3) {
         const randomElement = elements[Math.floor(Math.random() * elements.length)];
         if (randomElement) {
           const originalTransform = randomElement.style.transform;
           randomElement.style.transform = `rotate(${Math.random() * 3 - 1.5}deg) translateX(${Math.random() * 10 - 5}px)`;
           
           setTimeout(() => {
-            if (isMounted.current) {
-              randomElement.style.transform = originalTransform;
-            }
+            randomElement.style.transform = originalTransform;
           }, 1000);
         }
       }
@@ -133,7 +98,7 @@ function Profile() {
     
     // Случайные перезагрузки статистики
     const statsInterval = setInterval(() => {
-      if (Math.random() < 0.2 && isMounted.current) {
+      if (Math.random() < 0.2) {
         setProfileData(prev => ({
           ...prev,
           subscribers: prev.subscribers - Math.floor(Math.random() * 10),
@@ -144,14 +109,12 @@ function Profile() {
     
     // Показ раздражающей рекламы
     const adTimeout = setTimeout(() => {
-      if (isMounted.current) {
-        setShowAd(true);
-      }
+      setShowAd(true);
     }, 10000);
     
     // Интервал для повторного показа рекламы
     const adInterval = setInterval(() => {
-      if (Math.random() < 0.3 && isMounted.current) {
+      if (Math.random() < 0.3) {
         setShowAd(true);
       }
     }, 30000);
@@ -163,7 +126,7 @@ function Profile() {
       clearTimeout(adTimeout);
       clearInterval(adInterval);
     };
-  }, [isAuthenticated, user]);
+  }, []);
   
   // Обработчик смены аватара
   const handleAvatarChange = () => {
@@ -173,29 +136,13 @@ function Profile() {
     // 30% шанс показать ошибку при открытии формы
     if (Math.random() < 0.3) {
       setTimeout(() => {
-        if (isMounted.current) {
-          alert('ПРЕДУПРЕЖДЕНИЕ: ВАШИ ФОТО МОГУТ БЫТЬ ИСПОЛЬЗОВАНЫ ПРОТИВ ВАС!');
-        }
+        alert('ПРЕДУПРЕЖДЕНИЕ: ВАШИ ФОТО МОГУТ БЫТЬ ИСПОЛЬЗОВАНЫ ПРОТИВ ВАС!');
       }, 500);
     }
   };
   
-  // Обработчик изменения файла
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setAvatarFile(e.target.files[0]);
-      
-      // Показываем предварительный просмотр
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setNewAvatarUrl(event.target.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-  
   // Обработчик отправки формы аватара
-  const handleAvatarSubmit = async (e) => {
+  const handleAvatarSubmit = (e) => {
     e.preventDefault();
     
     // Очистка предыдущих ошибок
@@ -221,41 +168,12 @@ function Profile() {
       setFormErrors(randomErrors);
     }
     
-    // Пытаемся загрузить аватар только если нет случайных ошибок и есть файл
-    if (randomErrors.length === 0 && avatarFile) {
-      try {
-        // Вызов API для загрузки аватара
-        const result = await uploadAvatar(user.login, avatarFile);
-        
-        if (result && result.url) {
-          // Обновляем URL аватара
-          setProfileData(prev => ({
-            ...prev,
-            avatarUrl: result.url
-          }));
-          
-          setIsChangingAvatar(false);
-          setNewAvatarUrl('');
-          setAvatarFile(null);
-          
-          // Уведомление об успехе
-          setTimeout(() => {
-            alert('АВАТАР ОБНОВЛЕН! ТЕПЕРЬ ВЫ ВЫГЛЯДИТЕ ЕЩЕ ХУЖЕ!');
-          }, 300);
-        } else {
-          setAvatarError('НЕ УДАЛОСЬ ОБНОВИТЬ АВАТАР! ПОПРОБУЙТЕ ЕЩЕ РАЗ... ИЛИ НЕ ПРОБУЙТЕ!');
-        }
-      } catch (error) {
-        console.error('ОШИБКА ЗАГРУЗКИ АВАТАРА:', error);
-        setAvatarError('ОШИБКА ЗАГРУЗКИ АВАТАРА! СЕРВЕР ОТВЕРГ ВАШ ШЕДЕВР!');
-      }
-    } else if (randomErrors.length === 0 && newAvatarUrl && !avatarFile) {
-      // Для URL (не файла) - просто обновляем интерфейс
+    // 30% шанс успеха
+    if (Math.random() < 0.3 && newAvatarUrl.trim() && randomErrors.length === 0) {
       setProfileData(prev => ({
         ...prev,
-        avatarUrl: newAvatarUrl
+        avatarUrl: newAvatarUrl.trim()
       }));
-      
       setIsChangingAvatar(false);
       setNewAvatarUrl('');
       
@@ -288,25 +206,6 @@ function Profile() {
       alert('ОШИБКА ОБНОВЛЕНИЯ СТАТУСА! СЕРВЕР СЧИТАЕТ ВАШ СТАТУС СЛИШКОМ СКУЧНЫМ!');
     }
   };
-  
-  if (loading) {
-    return (
-      <div className="profile-container">
-        <h1 className="profile-title blink">ЗАГРУЗКА ВАШЕГО УЖАСНОГО ПРОФИЛЯ...</h1>
-        <div className="loading-spinner" style={{ textAlign: 'center', margin: '50px 0' }}>
-          <div className="spinner" style={{ 
-            display: 'inline-block',
-            width: '50px', 
-            height: '50px', 
-            border: '8px solid #ff00ff', 
-            borderTop: '8px solid #00ffff',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite' 
-          }}></div>
-        </div>
-      </div>
-    );
-  }
   
   return (
     <div className="profile-container">
@@ -357,32 +256,6 @@ function Profile() {
                     Используйте абсолютно любой URL, который всё равно не будет работать!
                   </p>
                   
-                  <div style={{ margin: '10px 0' }}>
-                    <p className="avatar-help">ИЛИ ЗАГРУЗИТЕ ФАЙЛ:</p>
-                    <input 
-                      type="file" 
-                      onChange={handleFileChange} 
-                      className="avatar-input"
-                      accept="image/*"
-                    />
-                  </div>
-                  
-                  {newAvatarUrl && (
-                    <div style={{ margin: '10px 0' }}>
-                      <p className="avatar-help">ПРЕДПРОСМОТР:</p>
-                      <img 
-                        src={newAvatarUrl} 
-                        alt="Предпросмотр" 
-                        style={{ 
-                          width: '100px', 
-                          height: '100px', 
-                          objectFit: 'cover',
-                          border: '3px dashed #ff00ff'
-                        }} 
-                      />
-                    </div>
-                  )}
-                  
                   <div className="avatar-buttons">
                     <button type="submit" className="avatar-submit rainbow-text">
                       СОХРАНИТЬ УЖАС
@@ -399,7 +272,6 @@ function Profile() {
                           setNewAvatarUrl('');
                           setAvatarError('');
                           setFormErrors([]);
-                          setAvatarFile(null);
                         }
                       }}
                     >
@@ -528,14 +400,6 @@ function Profile() {
                   </div>
                   
                   <div className="post-content">
-                    <h4 style={{ 
-                      color: '#ff00ff', 
-                      marginBottom: '10px', 
-                      textTransform: 'uppercase',
-                      animation: 'blinker 1.5s linear infinite'
-                    }}>
-                      {post.title}
-                    </h4>
                     <p className="post-text">{post.content}</p>
                     {post.image && (
                       <div className="post-image-container">
@@ -613,4 +477,4 @@ function Profile() {
   )
 }
 
-export default Profile;
+export default Profile

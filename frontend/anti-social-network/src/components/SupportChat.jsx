@@ -1,10 +1,7 @@
-import { useState, useEffect, useRef, useContext } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { sendMessage } from '../api'
+import { useState, useEffect, useRef } from 'react'
 import './SupportChat.css'
 
 function SupportChat() {
-  const { user, isAuthenticated } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -12,16 +9,6 @@ function SupportChat() {
   const [isScrolled, setIsScrolled] = useState(false);
   const messagesEndRef = useRef(null);
   const chatButtonRef = useRef(null);
-  
-  // Используем useRef для отслеживания монтирования компонента
-  const isMounted = useRef(true);
-  
-  // Очистка рефа при размонтировании
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
   
   // Закрытие чата с шансом неудачи
   const handleClose = () => {
@@ -33,55 +20,16 @@ function SupportChat() {
   };
   
   // Отправка сообщения
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     if (!inputValue.trim()) return;
     
     // Добавление сообщения пользователя
-    const userMessage = { text: inputValue, fromUser: true, time: new Date().toLocaleTimeString() };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...prev, { text: inputValue, fromUser: true, time: new Date().toLocaleTimeString() }]);
     setInputValue('');
-    
-    // Если пользователь авторизован, пытаемся отправить сообщение на сервер
-    if (isAuthenticated && user) {
-      try {
-        // Отправляем сообщение в службу поддержки (на сервер)
-        await sendMessage(user.login, 'support', inputValue);
-      } catch (error) {
-        console.error('ОШИБКА ОТПРАВКИ СООБЩЕНИЯ ПОДДЕРЖКИ:', error);
-      }
-    }
     
     // Начало "печатания" через 2 секунды
     setTimeout(() => {
-      if (isMounted.current) {
-        setIsTyping(true);
-        
-        // Через 3-5 секунд показываем ответ оператора
-        setTimeout(() => {
-          if (isMounted.current) {
-            setIsTyping(false);
-            
-            // Генерация случайного ответа оператора
-            const supportResponses = [
-              "Извините, но наши операторы в данный момент заняты игнорированием других пользователей.",
-              "Ваше сообщение было отправлено в черную дыру. Спасибо за обращение!",
-              "Ха-ха! Вы действительно подумали, что вам кто-то ответит?",
-              "Ваше сообщение было помечено как 'Неважное'. Больше не пишите нам.",
-              "Поддержка временно не работает. Если честно, она никогда не работала.",
-              "Спасибо за сообщение! Оно будет удалено через 3... 2... 1...",
-              "Ваше обращение находится в очереди #999999. Примерное время ответа: никогда.",
-              "Мы ценим ваше мнение! Но не настолько, чтобы отвечать на него.",
-              "Сервер поддержки упал и не может подняться. Как и ваша самооценка.",
-              "Ваш запрос был отклонен из-за наличия слишком большого количества смысла."
-            ];
-            
-            // Выбираем случайный ответ
-            const randomResponse = supportResponses[Math.floor(Math.random() * supportResponses.length)];
-            
-            setMessages(prev => [...prev, { text: randomResponse, fromUser: false, time: new Date().toLocaleTimeString() }]);
-          }
-        }, Math.random() * 2000 + 3000);
-      }
+      setIsTyping(true);
     }, 2000);
   };
   
@@ -125,9 +73,7 @@ function SupportChat() {
         
         // Сбрасываем через некоторое время
         setTimeout(() => {
-          if (isMounted.current) {
-            setIsScrolled(false);
-          }
+          setIsScrolled(false);
         }, 2000);
       }
     };
@@ -151,7 +97,7 @@ function SupportChat() {
   useEffect(() => {
     if (isOpen) {
       const soundInterval = setInterval(() => {
-        if (Math.random() < 0.2 && isMounted.current) {
+        if (Math.random() < 0.2) {
           // Имитируем звуковой эффект через вызов alert с небольшим шансом
           if (Math.random() < 0.1) {
             alert('ЗВУКОВОЕ УВЕДОМЛЕНИЕ: БИП-БИП!');
@@ -208,13 +154,6 @@ function SupportChat() {
                     <p>{msg.text}</p>
                     <span className="message-time">{msg.time}</span>
                   </div>
-                  
-                  {/* Индикаторы статуса для сообщений пользователя */}
-                  {msg.fromUser && (
-                    <div className="message-status">
-                      {Math.random() < 0.5 ? '✓' : '✓✓'}
-                    </div>
-                  )}
                 </div>
               ))}
               
@@ -253,4 +192,4 @@ function SupportChat() {
   )
 }
 
-export default SupportChat;
+export default SupportChat
