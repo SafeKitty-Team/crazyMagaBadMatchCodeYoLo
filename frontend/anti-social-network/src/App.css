@@ -292,3 +292,114 @@ main {
   box-sizing: border-box;
   animation: marquee 15s linear infinite;
 }
+/* Стили для компонентов аутентификации в App.css */
+
+/* Кнопка выхода */
+.logout-button {
+  background-color: #ff0000;
+  color: white;
+  border: 2px solid #ffff00;
+  padding: 5px 10px;
+  margin-left: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  animation: shake 2s infinite;
+  min-width: 60px;
+  min-height: 30px;
+}
+
+.logout-button:hover {
+  background-color: #990000;
+  transform: scale(1.1);
+}
+
+/* Кнопка входа */
+.login-button {
+  background-color: #00ff00;
+  color: #000000;
+  border: 2px solid #ff00ff;
+  padding: 5px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  min-width: 80px;
+  min-height: 35px;
+}
+
+.login-button:hover {
+  background-color: #ff00ff;
+  color: white;
+  transform: scale(1.1) rotate(3deg);
+}
+
+/* Сообщение для неавторизованных пользователей */
+.unauthorized-message {
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 5px dashed #ffff00;
+  padding: 30px;
+  text-align: center;
+  margin: 20px 0;
+  animation: wobble 3s infinite;
+}
+
+.unauthorized-message h2 {
+  color: #ff0000;
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 0 #000000;
+}
+
+.unauthorized-message p {
+  color: #00ffff;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.unauthorized-message .auth-button {
+  background-color: #ff00ff;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+  border: 3px double #00ffff;
+  min-width: 250px;
+  min-height: 50px;
+}
+
+.unauthorized-message .auth-button:hover {
+  background-color: #00ffff;
+  color: #000000;
+  transform: scale(1.1);
+}
+
+.warning-text {
+  color: #ff6600;
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Кнопка для тестовой авторизации */
+.test-auth-button {
+  background-color: #666666;
+  color: white;
+  border: 2px dashed #ff00ff;
+  padding: 10px 20px;
+  margin-top: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.8;
+  min-width: 200px;
+  min-height: 40px;
+}
+
+.test-auth-button:hover {
+  opacity: 1;
+  background-color: #333333;
+}

@@ -344,3 +344,169 @@
       justify-content: space-between;
     }
   }
+
+/* Стили для функции "Подумай еще раз" */
+
+/* Контейнер для функции "Подумай еще раз" */
+.think-again-container {
+  background-color: rgba(255, 0, 0, 0.2);
+  border: 4px dashed #ff0000;
+  padding: 15px;
+  margin: 15px 0;
+  animation: pulse-border 1.2s infinite;
+  position: relative;
+}
+
+@keyframes pulse-border {
+  0% { border-color: #ff0000; }
+  50% { border-color: #ffff00; }
+  100% { border-color: #ff0000; }
+}
+
+/* Предупреждение об удалении */
+.think-again-warning {
+  color: #ff0000;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-shadow: 2px 2px #000000;
+  transform: skew(-5deg, 2deg);
+  padding: 10px;
+  background-color: #ffff00;
+  box-shadow: 0 0 15px #ff00ff;
+}
+
+/* Прогресс подтверждения */
+.confirmation-progress {
+  background-color: #333333;
+  height: 20px;
+  position: relative;
+  margin-bottom: 15px;
+  border: 2px solid #00ffff;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
+  background-size: 400% 400%;
+  animation: gradient-move 3s ease infinite;
+  transition: width 0.3s;
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  font-size: 12px;
+}
+
+/* Кнопки подтверждения */
+.confirmation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirm-button {
+  padding: 10px 8px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #ff6600;
+  color: white;
+  border: 3px solid #ffff00;
+  cursor: pointer;
+  min-width: 45%;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.confirm-button::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff);
+  background-size: 400% 400%;
+  animation: gradient-move 3s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.confirm-button:hover::before {
+  opacity: 0.8;
+}
+
+.confirm-button.confirmed {
+  background-color: #009900;
+  color: white;
+  border-color: #00ff00;
+  transform: scale(0.95) rotate(0deg);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.confirm-button.disabled {
+  background-color: #666666;
+  color: #aaaaaa;
+  border-color: #999999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.confirm-button.available:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.confirm-button.available:active {
+  transform: scale(0.95);
+}
+
+/* Анимация для кнопок подтверждения */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.confirm-button.available {
+  animation: wiggle 1s infinite;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+  .confirmation-buttons {
+    flex-direction: column;
+  }
+  
+  .confirm-button {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .think-again-warning {
+    font-size: 14px;
+  }
+}

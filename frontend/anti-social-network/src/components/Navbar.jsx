@@ -1,8 +1,19 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 import './Navbar.css'
 
 function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { isAuthenticated, user, logout, setShowAuth } = useContext(AuthContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // Функция для обработки клика по ссылкам, требующим авторизации
+  const handleAuthRequiredClick = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ ДЛЯ ДОСТУПА К ЭТОЙ ФУНКЦИИ!');
+      setShowAuth(true);
+    }
+  };
   
   return (
     <nav className="navbar">
@@ -19,22 +30,79 @@ function Navbar() {
       
       <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
         <li><a href="#" className="nav-link shake">ГЛАВНАЯ</a></li>
-        <li><a href="#" className="nav-link bounce">ПРОФИЛЬ</a></li>
-        <li><a href="#" className="nav-link rotate">ДРУЗЬЯ</a></li>
-        <li><a href="#" className="nav-link skew">СООБЩЕНИЯ <span className="notification">99+</span></a></li>
-        <li><a href="#" className="nav-link glitch">НАСТРОЙКИ</a></li>
+        <li>
+          <a 
+            href="#" 
+            className="nav-link bounce" 
+            onClick={handleAuthRequiredClick}
+          >
+            ПРОФИЛЬ
+          </a>
+        </li>
+        <li>
+          <a 
+            href="#" 
+            className="nav-link rotate" 
+            onClick={handleAuthRequiredClick}
+          >
+            ДРУЗЬЯ
+          </a>
+        </li>
+        <li>
+          <a 
+            href="#" 
+            className="nav-link skew" 
+            onClick={handleAuthRequiredClick}
+          >
+            СООБЩЕНИЯ <span className="notification">99+</span>
+          </a>
+        </li>
+        <li>
+          <a 
+            href="#" 
+            className="nav-link glitch" 
+            onClick={handleAuthRequiredClick}
+          >
+            НАСТРОЙКИ
+          </a>
+        </li>
       </ul>
       
       <div className="search-bar">
         <input type="text" placeholder="ПОИСК ЧЕГО-ТО..." className="search-input" />
-        <button className="search-button">НАЙТИ!</button>
+        <button className="search-button" onClick={() => {
+          if (!isAuthenticated) {
+            alert('НЕЛЬЗЯ ИСКАТЬ БЕЗ АВТОРИЗАЦИИ! МЫ ДОЛЖНЫ ЗНАТЬ, КТО ВЫ!');
+            setShowAuth(true);
+          } else {
+            alert('ПОИСК СЛОМАН! ПОПРОБУЙТЕ ПОЗЖЕ... ИЛИ НИКОГДА!');
+          }
+        }}>НАЙТИ!</button>
       </div>
       
       <div className="user-info">
-        <span className="username rainbow-text">П0ЛЬЗ0ВАТЕЛЬ_123</span>
-        <div className="avatar">
-          <img src="https://via.placeholder.com/40" alt="Аватар" />
-        </div>
+        {isAuthenticated ? (
+          <>
+            <span className="username rainbow-text">{user.login}</span>
+            <div className="avatar">
+              <img src="https://via.placeholder.com/40" alt="Аватар" />
+            </div>
+            <button 
+              className="logout-button" 
+              onClick={logout}
+              title="Выйти из системы"
+            >
+              ВЫХОД
+            </button>
+          </>
+        ) : (
+          <button 
+            className="login-button blink" 
+            onClick={() => setShowAuth(true)}
+          >
+            ВОЙТИ
+          </button>
+        )}
       </div>
     </nav>
   )

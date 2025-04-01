@@ -151,20 +151,19 @@ function Auth({ onLogin, onClose }) {
       return;
     }
     
-    // Проверяем, используется ли пароль кем-то другим (ужасная практика)
+    // Проверяем, используется ли пароль кем-то другим (ужасная практика безопасности)
     const userWithSamePassword = USERS.find(u => u.password === password);
     if (userWithSamePassword) {
-      setErrors(prev => [...prev, `ВНИМАНИЕ! Этот пароль уже используется пользователем ${userWithSamePassword.login}! Продолжить?`]);
+      // Добавляем раздражающий alert
+      alert(`ОШИБКА БЕЗОПАСНОСТИ! ЭТОТ ПАРОЛЬ УЖЕ ИСПОЛЬЗУЕТСЯ ПОЛЬЗОВАТЕЛЕМ "${userWithSamePassword.login}"! ВЫБЕРИТЕ ДРУГОЙ ПАРОЛЬ!`);
       
-      // Добавим пользователя всё равно, игнорируя проблему с безопасностью
+      // Добавляем яркую ошибку в список ошибок
+      setErrors(prev => [...prev, `КРИТИЧЕСКАЯ ОШИБКА! ЭТОТ ПАРОЛЬ УЖЕ ИСПОЛЬЗУЕТ ПОЛЬЗОВАТЕЛЬ "${userWithSamePassword.login}"! ВЫБЕРИТЕ ДРУГОЙ ПАРОЛЬ!`]);
+      
+      // Блокируем регистрацию - не создаем пользователя
       setTimeout(() => {
-        USERS.push({ login, password, email });
-        localStorage.setItem('antisoc_user', JSON.stringify({ login, email }));
-        setErrors(prev => [...prev, 'РЕГИСТРАЦИЯ ЗАВЕРШЕНА! ТЕПЕРЬ ВЫ С НАМИ НАВСЕГДА!']);
-        
-        setTimeout(() => {
-          onLogin({ login, email });
-        }, 2000);
+        // Добавляем дополнительное раздражающее сообщение через некоторое время
+        setErrors(prev => [...prev, `СЛУЖБА БЕЗОПАСНОСТИ: Попытка использовать пароль пользователя "${userWithSamePassword.login}" зарегистрирована! Возможно, вы взломщик?`]);
       }, 3000);
       
       return;
