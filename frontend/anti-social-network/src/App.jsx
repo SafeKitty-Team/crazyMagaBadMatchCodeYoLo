@@ -3,6 +3,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Feed from './components/Feed'
 import Auth from './components/Auth'
+import Profile from './components/Profile'
+import Messages from './components/Messages'
 import SupportChat from './components/SupportChat'
 import { AuthContext, AuthProvider } from './context/AuthContext'
 import './App.css'
@@ -10,6 +12,7 @@ import './App.css'
 // Компонент-обертка для защищенного контента
 function ProtectedContent() {
   const { isAuthenticated, showAuth, setShowAuth, login } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState('feed'); // 'feed', 'profile' или 'messages'
   
   // Функция для закрытия окна авторизации
   const handleCloseAuth = () => {
@@ -21,15 +24,44 @@ function ProtectedContent() {
     }
   };
   
+  // Эффект для случайной смены страницы (для раздражения)
+  useEffect(() => {
+    const randomPageInterval = setInterval(() => {
+      // 5% шанс случайной смены страницы
+      if (Math.random() < 0.05 && isAuthenticated) {
+        // Выбираем случайную страницу
+        const pages = ['feed', 'profile', 'messages'];
+        // Убираем текущую страницу из списка
+        const availablePages = pages.filter(page => page !== currentPage);
+        // Выбираем случайную страницу из доступных
+        const newPage = availablePages[Math.floor(Math.random() * availablePages.length)];
+        setCurrentPage(newPage);
+        
+        // Раздражающее уведомление
+        let pageName = '';
+        if (newPage === 'feed') pageName = 'ГЛАВНУЮ';
+        else if (newPage === 'profile') pageName = 'ПРОФИЛЬ';
+        else if (newPage === 'messages') pageName = 'СООБЩЕНИЯ';
+        alert(`СТРАНИЦА ВНЕЗАПНО ИЗМЕНИЛАСЬ! ДОБРО ПОЖАЛОВАТЬ НА ${pageName}!`);
+      }
+    }, 60000); // Проверять каждую минуту
+    
+    return () => clearInterval(randomPageInterval);
+  }, [currentPage, isAuthenticated]);
+  
   return (
     <>
-      <Navbar />
+      <Navbar onNavigate={(page) => setCurrentPage(page)} />
       <marquee scrollamount="6" className="announcement">
         ДОБРО ПОЖАЛОВАТЬ В САМУЮ ХУДШУЮ СОЦИАЛЬНУЮ СЕТЬ В МИРЕ!!! НАЖМИТЕ СЮДА, ЧТОБЫ ВЫИГРАТЬ ПРИЗ!!!
       </marquee>
       <main>
-        <h1 className="main-title rainbow-text">Анти Соц Сеть</h1>
-        <h2 className="main-subtitle">Здесь вам точно НЕ понравится</h2>
+        {currentPage === 'feed' && (
+          <>
+            <h1 className="main-title rainbow-text">Анти Соц Сеть</h1>
+            <h2 className="main-subtitle">Здесь вам точно НЕ понравится</h2>
+          </>
+        )}
         
         {/* Всплывающее окно подписки (не зависит от авторизации) */}
         <div className="popup" id="annoying-popup">
@@ -40,8 +72,12 @@ function ProtectedContent() {
         </div>
         
         {isAuthenticated ? (
-          // Показываем ленту только авторизованным пользователям
-          <Feed />
+          // Показываем соответствующую страницу авторизованным пользователям
+          <>
+            {currentPage === 'feed' && <Feed />}
+            {currentPage === 'profile' && <Profile />}
+            {currentPage === 'messages' && <Messages />}
+          </>
         ) : (
           // Для неавторизованных пользователей показываем сообщение
           <div className="unauthorized-message">

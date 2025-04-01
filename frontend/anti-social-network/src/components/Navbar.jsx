@@ -2,16 +2,63 @@ import { useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import './Navbar.css'
 
-function Navbar() {
+function Navbar({ onNavigate }) {
   const { isAuthenticated, user, logout, setShowAuth } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
   
   // Функция для обработки клика по ссылкам, требующим авторизации
-  const handleAuthRequiredClick = (e) => {
+  const handleAuthRequiredClick = (e, page = null) => {
     if (!isAuthenticated) {
       e.preventDefault();
       alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ ДЛЯ ДОСТУПА К ЭТОЙ ФУНКЦИИ!');
       setShowAuth(true);
+      return false;
+    }
+    
+    if (page) {
+      e.preventDefault();
+      onNavigate && onNavigate(page);
+      return true;
+    }
+    
+    return true;
+  };
+  
+  // Функция для перехода на профиль
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      alert('ВЫ ДОЛЖНЫ АВТОРИЗОВАТЬСЯ, ЧТОБЫ ПРОСМАТРИВАТЬ ПРОФИЛЬ!');
+      setShowAuth(true);
+    } else {
+      // 20% шанс показать ошибку перехода
+      if (Math.random() < 0.2) {
+        alert('ОШИБКА ПЕРЕХОДА! СЕРВЕР ПЕРЕГРУЖЕН ВАШЕЙ БЕСПОМОЩНОСТЬЮ!');
+      } else {
+        onNavigate && onNavigate('profile');
+        // Раздражающее сообщение
+        setTimeout(() => {
+          alert('ВЫ ПЕРЕШЛИ В СВОЙ ПРОФИЛЬ! ОН УЖАСЕН!');
+        }, 500);
+      }
+    }
+  };
+  
+  // Функция для перехода на главную
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    // 10% шанс показать ошибку перехода
+    if (Math.random() < 0.1) {
+      alert('ГЛАВНАЯ СТРАНИЦА ВРЕМЕННО НЕДОСТУПНА! ПОПРОБУЙТЕ ЧЕРЕЗ 5 МИНУТ!');
+    } else {
+      onNavigate && onNavigate('feed');
+      
+      // Раздражающее сообщение с 30% шансом
+      if (Math.random() < 0.3) {
+        setTimeout(() => {
+          alert('ВЫ ВЕРНУЛИСЬ НА ГЛАВНУЮ! КАК СКУЧНО И ПРЕДСКАЗУЕМО!');
+        }, 500);
+      }
     }
   };
   
@@ -29,12 +76,12 @@ function Navbar() {
       </div>
       
       <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-        <li><a href="#" className="nav-link shake">ГЛАВНАЯ</a></li>
+        <li><a href="#" className="nav-link shake" onClick={handleHomeClick}>ГЛАВНАЯ</a></li>
         <li>
           <a 
             href="#" 
             className="nav-link bounce" 
-            onClick={handleAuthRequiredClick}
+            onClick={handleProfileClick}
           >
             ПРОФИЛЬ
           </a>
@@ -42,17 +89,23 @@ function Navbar() {
         <li>
           <a 
             href="#" 
-            className="nav-link rotate" 
-            onClick={handleAuthRequiredClick}
-          >
-            ДРУЗЬЯ
-          </a>
-        </li>
-        <li>
-          <a 
-            href="#" 
             className="nav-link skew" 
-            onClick={handleAuthRequiredClick}
+            onClick={(e) => {
+              // Проверяем авторизацию и переходим на страницу сообщений
+              if (handleAuthRequiredClick(e, 'messages')) {
+                // 20% шанс показать ошибку перехода
+                if (Math.random() < 0.2) {
+                  alert('ОШИБКА ПЕРЕХОДА! СЕРВЕР СООБЩЕНИЙ ПЕРЕГРУЖЕН!');
+                } else {
+                  // Раздражающее сообщение с 30% шансом
+                  if (Math.random() < 0.3) {
+                    setTimeout(() => {
+                      alert('ВЫ ПЕРЕШЛИ В СООБЩЕНИЯ! ВАМ ВСЕ РАВНО НИКТО НЕ ПИШЕТ!');
+                    }, 500);
+                  }
+                }
+              }
+            }}
           >
             СООБЩЕНИЯ <span className="notification">99+</span>
           </a>
@@ -67,18 +120,6 @@ function Navbar() {
           </a>
         </li>
       </ul>
-      
-      <div className="search-bar">
-        <input type="text" placeholder="ПОИСК ЧЕГО-ТО..." className="search-input" />
-        <button className="search-button" onClick={() => {
-          if (!isAuthenticated) {
-            alert('НЕЛЬЗЯ ИСКАТЬ БЕЗ АВТОРИЗАЦИИ! МЫ ДОЛЖНЫ ЗНАТЬ, КТО ВЫ!');
-            setShowAuth(true);
-          } else {
-            alert('ПОИСК СЛОМАН! ПОПРОБУЙТЕ ПОЗЖЕ... ИЛИ НИКОГДА!');
-          }
-        }}>НАЙТИ!</button>
-      </div>
       
       <div className="user-info">
         {isAuthenticated ? (
