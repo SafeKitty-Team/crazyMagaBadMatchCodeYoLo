@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
+import { AuthContext } from '../context/AuthContext'
 import './Auth.css'
 
-// Ужасная база данных пользователей прямо в компоненте!
-const USERS = [
-  { login: 'тролль', password: '12345', email: 'troll@antisoc.net' },
-  { login: 'админ', password: 'админ', email: 'admin@antisoc.net' },
-  { login: 'хакер', password: 'пароль', email: 'hacker@antisoc.net' }
-];
-
-function Auth({ onLogin, onClose }) {
+function Auth({ onClose }) {
+  const { login, register } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
-  const [login, setLogin] = useState('');
+  const [loginInput, setLoginInput] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
@@ -18,12 +13,23 @@ function Auth({ onLogin, onClose }) {
   const [capsLockOn, setCapsLockOn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginAttempts, setLoginAttempts] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Реф для отслеживания монтирования
+  const isMounted = useRef(true);
+  
+  // Эффект для размонтирования
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
   
   // Эффект для случайных ошибок
   useEffect(() => {
     const randomErrorInterval = setInterval(() => {
       // 10% шанс появления случайной ошибки
-      if (Math.random() < 0.1) {
+      if (Math.random() < 0.1 && isMounted.current) {
         const randomErrors = [
           'ОШИБКА СЕРВЕРА: Попробуйте позже, а лучше - никогда!',
           'ВНИМАНИЕ: Ваш IP-адрес записан в базу данных!',
@@ -35,7 +41,9 @@ function Auth({ onLogin, onClose }) {
         
         // Удаляем ошибку через 5 секунд
         setTimeout(() => {
-          setErrors(prev => prev.slice(1));
+          if (isMounted.current) {
+            setErrors(prev => prev.slice(1));
+          }
         }, 5000);
       }
     }, 8000);
@@ -81,101 +89,99 @@ function Auth({ onLogin, onClose }) {
     }
   }, [password]);
   
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     
     // Излишне раздражающие задержки
     setErrors([...errors, 'ПОДКЛЮЧЕНИЕ К СЕРВЕРУ...']);
     setTimeout(() => {
+      if (!isMounted.current) return;
+      
       setErrors(prev => prev.filter(err => err !== 'ПОДКЛЮЧЕНИЕ К СЕРВЕРУ...'));
       setErrors(prev => [...prev, 'ПРОВЕРКА УЧЕТНЫХ ДАННЫХ...']);
       
-      setTimeout(() => {
+      setTimeout(async () => {
+        if (!isMounted.current) return;
+        
         setErrors(prev => prev.filter(err => err !== 'ПРОВЕРКА УЧЕТНЫХ ДАННЫХ...'));
         
-        // Проверка авторизации
-        const user = USERS.find(u => u.login === login && u.password === password);
+        // Вызов функции авторизации из контекста
+        const success = await login({ 
+          login: loginInput, 
+          password: password 
+        });
         
-        if (user) {
+        if (success) {
           setErrors(prev => [...prev, 'УСПЕХ! ДОБРО ПОЖАЛОВАТЬ В АД!']);
-          
-          setTimeout(() => {
-            // Имитация сохранения в localStorage
-            localStorage.setItem('antisoc_user', JSON.stringify({ login: user.login, email: user.email }));
-            onLogin(user);
-          }, 2000);
         } else {
           setLoginAttempts(prev => prev + 1);
           
           if (loginAttempts >= 2) {
             setErrors(prev => [...prev, 'СЛИШКОМ МНОГО ПОПЫТОК! ПОДОЖДИТЕ 5 СЕКУНД...']);
             setTimeout(() => {
-              setErrors(prev => prev.filter(err => err !== 'СЛИШКОМ МНОГО ПОПЫТОК! ПОДОЖДИТЕ 5 СЕКУНД...'));
-              setLoginAttempts(0);
+              if (isMounted.current) {
+                setErrors(prev => prev.filter(err => err !== 'СЛИШКОМ МНОГО ПОПЫТОК! ПОДОЖДИТЕ 5 СЕКУНД...'));
+                setLoginAttempts(0);
+                setIsSubmitting(false);
+              }
             }, 5000);
           } else {
-            // Проверка, используется ли пароль кем-то другим (ужасная практика безопасности)
-            const userWithSamePassword = USERS.find(u => u.password === password);
-            if (userWithSamePassword) {
-              setErrors(prev => [...prev, `НЕВЕРНЫЙ ЛОГИН! Этот пароль принадлежит пользователю ${userWithSamePassword.login}!`]);
-            } else {
-              setErrors(prev => [...prev, 'НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ! ИЛИ ВСЁ ВМЕСТЕ!']);
-            }
+            setErrors(prev => [...prev, 'НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ! ИЛИ ВСЁ ВМЕСТЕ!']);
+            setIsSubmitting(false);
           }
         }
       }, 1500);
     }, 1500);
   };
   
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     
-    // Валидация с раздражающим UX
-    if (login.length < 3) {
-      setErrors(prev => [...prev, 'ЛОГИН СЛИШКОМ КОРОТКИЙ! МИНИМУМ 3 СИМВОЛА!']);
-      return;
-    }
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     
-    if (USERS.some(u => u.login === login)) {
-      setErrors(prev => [...prev, 'ЭТОТ ЛОГИН УЖЕ ЗАНЯТ! ПРИДУМАЙТЕ ЧТО-ТО БОЛЕЕ УНИКАЛЬНОЕ!']);
+    // Валидация с раздражающим UX
+    if (loginInput.length < 3) {
+      setErrors(prev => [...prev, 'ЛОГИН СЛИШКОМ КОРОТКИЙ! МИНИМУМ 3 СИМВОЛА!']);
+      setIsSubmitting(false);
       return;
     }
     
     if (!email.includes('@')) {
       setErrors(prev => [...prev, 'ЭТО НЕ ПОХОЖЕ НА EMAIL! ВЫ ВООБЩЕ ЗНАЕТЕ, ЧТО ТАКОЕ EMAIL?']);
+      setIsSubmitting(false);
       return;
     }
     
     if (password.length < 5) {
       setErrors(prev => [...prev, 'СЛИШКОМ КОРОТКИЙ ПАРОЛЬ! ХОТЯ КОМУ КАКАЯ РАЗНИЦА...']);
+      setIsSubmitting(false);
       return;
     }
     
-    // Проверяем, используется ли пароль кем-то другим (ужасная практика безопасности)
-    const userWithSamePassword = USERS.find(u => u.password === password);
-    if (userWithSamePassword) {
-      // Добавляем раздражающий alert
-      alert(`ОШИБКА БЕЗОПАСНОСТИ! ЭТОТ ПАРОЛЬ УЖЕ ИСПОЛЬЗУЕТСЯ ПОЛЬЗОВАТЕЛЕМ "${userWithSamePassword.login}"! ВЫБЕРИТЕ ДРУГОЙ ПАРОЛЬ!`);
-      
-      // Добавляем яркую ошибку в список ошибок
-      setErrors(prev => [...prev, `КРИТИЧЕСКАЯ ОШИБКА! ЭТОТ ПАРОЛЬ УЖЕ ИСПОЛЬЗУЕТ ПОЛЬЗОВАТЕЛЬ "${userWithSamePassword.login}"! ВЫБЕРИТЕ ДРУГОЙ ПАРОЛЬ!`]);
-      
-      // Блокируем регистрацию - не создаем пользователя
-      setTimeout(() => {
-        // Добавляем дополнительное раздражающее сообщение через некоторое время
-        setErrors(prev => [...prev, `СЛУЖБА БЕЗОПАСНОСТИ: Попытка использовать пароль пользователя "${userWithSamePassword.login}" зарегистрирована! Возможно, вы взломщик?`]);
-      }, 3000);
-      
-      return;
-    }
+    // Раздражающее сообщение о регистрации
+    setErrors(prev => [...prev, 'ОТПРАВКА ДАННЫХ НА СЕРВЕР...']);
     
-    // "Успешная" регистрация
-    USERS.push({ login, password, email });
-    localStorage.setItem('antisoc_user', JSON.stringify({ login, email }));
-    setErrors(prev => [...prev, 'РЕГИСТРАЦИЯ ЗАВЕРШЕНА! ДОБРО ПОЖАЛОВАТЬ В КОШМАР!']);
-    
-    setTimeout(() => {
-      onLogin({ login, email });
+    setTimeout(async () => {
+      if (!isMounted.current) return;
+      
+      setErrors(prev => prev.filter(err => err !== 'ОТПРАВКА ДАННЫХ НА СЕРВЕР...'));
+      
+      const success = await register({
+        login: loginInput,
+        email: email,
+        password: password
+      });
+      
+      if (success) {
+        setErrors(prev => [...prev, 'РЕГИСТРАЦИЯ ЗАВЕРШЕНА! ДОБРО ПОЖАЛОВАТЬ В КОШМАР!']);
+      } else {
+        setErrors(prev => [...prev, 'ОШИБКА РЕГИСТРАЦИИ! СЕРВЕР ОТВЕРГ ВАШИ ДАННЫЕ!']);
+        setIsSubmitting(false);
+      }
     }, 2000);
   };
   
@@ -228,8 +234,8 @@ function Auth({ onLogin, onClose }) {
             <input 
               type="text" 
               id="login" 
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
+              value={loginInput}
+              onChange={(e) => setLoginInput(e.target.value)}
               onFocus={() => setErrors(prev => [...prev, getInputHint('login')])}
               className="auth-input shake"
               placeholder="ВВЕДИТЕ ЛОГИН ТУТ"
@@ -297,9 +303,13 @@ function Auth({ onLogin, onClose }) {
           </div>
           
           {isLogin ? (
-            <button type="submit" className="auth-button blink">ВОЙТИ В КОШМАР!</button>
+            <button type="submit" className="auth-button blink" disabled={isSubmitting}>
+              {isSubmitting ? 'ВХОДИМ В КОШМАР...' : 'ВОЙТИ В КОШМАР!'}
+            </button>
           ) : (
-            <button type="submit" className="auth-button blink">ЗАРЕГИСТРИРОВАТЬСЯ!</button>
+            <button type="submit" className="auth-button blink" disabled={isSubmitting}>
+              {isSubmitting ? 'РЕГИСТРИРУЕМСЯ...' : 'ЗАРЕГИСТРИРОВАТЬСЯ!'}
+            </button>
           )}
           
           {/* Случайная капча */}

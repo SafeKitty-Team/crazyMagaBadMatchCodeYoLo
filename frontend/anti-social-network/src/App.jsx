@@ -11,7 +11,7 @@ import './App.css'
 
 // Компонент-обертка для защищенного контента
 function ProtectedContent() {
-  const { isAuthenticated, showAuth, setShowAuth, login } = useContext(AuthContext);
+  const { isAuthenticated, showAuth, setShowAuth, login, isLoading } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState('feed');
   
   // Функция для навигации по страницам
@@ -42,6 +42,39 @@ function ProtectedContent() {
     }
   };
   
+  if (isLoading) {
+    return (
+      <>
+        <Navbar onNavigate={handleNavigate} />
+        <div className="loading-container" style={{ 
+          textAlign: 'center', 
+          padding: '50px', 
+          margin: '20px', 
+          backgroundColor: 'rgba(255, 0, 255, 0.3)',
+          border: '8px ridge #00ffff'
+        }}>
+          <h2 className="blink" style={{ color: '#ffff00', textShadow: '2px 2px 0 #000000' }}>
+            ЗАГРУЗКА АНТИСОЦИАЛЬНОГО КОНТЕНТА...
+          </h2>
+          <div className="spinner" style={{ 
+            display: 'inline-block',
+            width: '50px', 
+            height: '50px', 
+            margin: '20px',
+            border: '8px solid #ff00ff', 
+            borderTop: '8px solid #00ffff',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite' 
+          }}></div>
+          <p className="wobble" style={{ color: '#00ffff' }}>
+            Пожалуйста, подождите, пока мы загружаем худший контент в интернете...
+          </p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+  
   return (
     <>
       <Navbar onNavigate={handleNavigate} />
@@ -54,9 +87,15 @@ function ProtectedContent() {
         {/* Всплывающее окно подписки (не зависит от авторизации) */}
         <div className="popup" id="annoying-popup">
           <h3>ПОДПИШИСЬ НА РАССЫЛКУ</h3>
-          <button className="close-btn" onClick={() => document.getElementById('annoying-popup').style.display = 'none'}>X</button>
+          <button className="close-btn" onClick={() => {
+            if (Math.random() < 0.3) {
+              alert('ОШИБКА ЗАКРЫТИЯ ОКНА! ПОПРОБУЙТЕ ЕЩЕ РАЗ!');
+            } else {
+              document.getElementById('annoying-popup').style.display = 'none';
+            }
+          }}>X</button>
           <input type="email" placeholder="ВВЕДИ ПОЧТУ ТУТ" />
-          <button className="submit-btn">ПОДПИСАТЬСЯ!</button>
+          <button className="submit-btn" onClick={() => alert('СПАСИБО ЗА ПОДПИСКУ! ТЕПЕРЬ МЫ БУДЕМ СЛАТЬ ВАМ СПАМ ВЕЧНО!')}>ПОДПИСАТЬСЯ!</button>
         </div>
         
         {isAuthenticated ? (
@@ -73,18 +112,6 @@ function ProtectedContent() {
             <p className="warning-text tilted">
               ВНИМАНИЕ: При регистрации вы соглашаетесь с нашими <span className="rainbow-text">несуществующими правилами</span> и <span className="blink">отсутствующей политикой конфиденциальности</span>.
             </p>
-            
-            {/* Кнопка временной авторизации для тестирования */}
-            <button 
-              className="test-auth-button shake" 
-              onClick={() => {
-                localStorage.setItem('antisoc_user', JSON.stringify({ login: 'ТестовыйПользователь', email: 'test@antisoc.net' }));
-                login({ login: 'ТестовыйПользователь', email: 'test@antisoc.net' });
-                alert('ВЫ АВТОРИЗОВАНЫ КАК ТЕСТОВЫЙ ПОЛЬЗОВАТЕЛЬ! ЭТО ВРЕМЕННАЯ ФУНКЦИЯ!');
-              }}
-            >
-              ТЕСТОВАЯ АВТОРИЗАЦИЯ (ВРЕМЕННО)
-            </button>
           </div>
         )}
       </main>
@@ -133,4 +160,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
