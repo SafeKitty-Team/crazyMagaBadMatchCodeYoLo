@@ -5,6 +5,7 @@
         'sdfsdf': {'пароль': 'wewer', "photo_path": '/1.png', 'email_address': '...email...'},
     }
 
+
 посты = {
     'Артем': {
         'посты': [
