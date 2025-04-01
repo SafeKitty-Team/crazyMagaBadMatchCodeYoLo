@@ -1,0 +1,233 @@
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #ff00ff;
+  border-bottom: 8px dashed #00ffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  transform: rotate(-3deg);
+  /* Добавлен отступ для лучшей доступности */
+  padding: 5px;
+  margin: 5px;
+}
+
+.logo-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: yellow;
+  margin-right: 10px;
+  text-shadow: 3px 3px 0 blue, 5px 5px 0 red;
+}
+
+/* Мобильное меню - увеличены области клика */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  width: 40px;
+  height: 40px; /* Увеличен размер для удобства */
+  justify-content: space-between;
+  /* Добавлен отступ */
+  padding: 5px;
+  margin: 5px;
+}
+
+.bar {
+  height: 5px;
+  width: 100%;
+  background-color: #ff0000;
+  border-radius: 10px;
+  transition: 0.4s;
+}
+
+.menu-toggle.open .bar:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.menu-toggle.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open .bar:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Навигационные ссылки - увеличены области клика */
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 18px; /* Увеличены отступы */
+  background-color: #9900cc;
+  border: 3px solid #00ff00;
+  border-radius: 15px;
+  display: inline-block;
+  position: relative;
+  transition: all 0.3s;
+  /* Гарантируем минимальный размер для клика */
+  min-width: 40px;
+  min-height: 40px;
+  margin: 5px;
+}
+
+.nav-link:hover {
+  background-color: #00ffff;
+  color: #ff00ff;
+  transform: scale(1.05) rotate(2deg);
+}
+
+.notification {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Поисковая строка - увеличены размеры полей */
+.search-bar {
+  display: flex;
+  margin: 5px 15px;
+}
+
+.search-input {
+  padding: 12px;
+  border: 5px dotted orange;
+  background-color: #ccff00;
+  color: purple;
+  font-size: 16px;
+  width: 200px;
+  /* Минимальная высота для улучшения доступности */
+  min-height: 20px;
+}
+
+.search-button {
+  background-color: #ff3300;
+  color: white;
+  border: none;
+  padding: 12px 18px; /* Увеличены отступы */
+  font-weight: bold;
+  cursor: pointer;
+  /* Минимальная ширина для улучшения доступности */
+  min-width: 60px;
+}
+
+/* Информация о пользователе */
+.user-info {
+  display: flex;
+  align-items: center;
+  /* Добавлен отступ */
+  margin: 5px;
+  padding: 5px;
+}
+
+.username {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #00ff00;
+  animation: border-color-change 3s infinite;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes border-color-change {
+  0% { border-color: #ff0000; }
+  25% { border-color: #ffff00; }
+  50% { border-color: #00ff00; }
+  75% { border-color: #00ffff; }
+  100% { border-color: #ff0000; }
+}
+
+/* Адаптивность (сохраняем ужасность, но улучшаем доступность) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .menu-toggle {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #9900cc;
+    padding: 20px;
+    margin-top: 15px;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin: 10px 0;
+  }
+  
+  .search-bar {
+    margin: 15px 0;
+    width: 100%;
+  }
+  
+  .search-input {
+    width: 70%;
+  }
+  
+  .user-info {
+    margin-top: 15px;
+    align-self: center;
+  }
+}
