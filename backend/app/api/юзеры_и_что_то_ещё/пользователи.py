@@ -40,3 +40,19 @@ async def create_post(user: str, title: str, описание: str):
 
 
 
+@router.get('/idi_i_soberi_random_posti')
+async def create_post(idi_i_soberi_random_posti_count: int = 5):
+	def получить_рандомные_посты(n=5):
+		# Собираем все посты в один список
+		все_посты = []
+		for user_data in посты.values():
+			все_посты.extend(user_data['посты'])
+		
+		# Если запрашиваем больше постов, чем есть - возвращаем все
+		n = min(n, len(все_посты))
+		
+		# Возвращаем n случайных постов
+		import random
+	
+		return random.sample(все_посты, n)
+	return получить_рандомные_посты(idi_i_soberi_random_posti_count)
