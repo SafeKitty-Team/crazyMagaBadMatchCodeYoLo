@@ -9,7 +9,7 @@ import os
 import random as рандом
 import string as строка
 
-from crazyMagaBadMatchCodeYoLo.backend.app.db.базаданных import пользователи
+from app.db.базаданных import пользователи
 
 
 def рандом_номер_фото(length):

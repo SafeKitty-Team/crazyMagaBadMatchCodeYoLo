@@ -1,7 +1,7 @@
 import random
 from fastapi import APIRouter as апироутер
 from fastapi import Body
-from backend.app.db.базаданных import пользователи, посты, смски
+from app.db.базаданных import пользователи, посты, смски
 
 вайфайроутер = апироутер()
 
