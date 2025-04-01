@@ -21,16 +21,17 @@
     text-align: center;
     color: #ffff00;
     text-shadow: 
-      5px 5px 0 #ff0000,
-      -5px -5px 0 #0000ff,
-      10px 10px 10px rgba(0, 0, 0, 0.5);
+      3px 3px 0 #ff0000,
+      -3px -3px 0 #0000ff,
+      5px 5px 5px rgba(0, 0, 0, 0.5);
     transform: rotate(-3deg);
     margin-bottom: 30px;
-    letter-spacing: 8px;
+    letter-spacing: 5px;
     background-color: #000000;
     padding: 15px;
     border: 8px ridge #00ff00;
     animation: tilt 3s infinite;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   @keyframes tilt {
@@ -68,9 +69,14 @@
     color: #00ffff;
     text-align: center;
     margin-bottom: 15px;
-    text-shadow: 3px 3px 0 #000000;
+    text-shadow: 2px 2px 0 #000000;
     letter-spacing: 2px;
     transform: rotate(2deg);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .chat-search {
@@ -86,6 +92,7 @@
     border: 3px dashed #ff00ff;
     font-size: 16px;
     transform: rotate(-1deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .chat-search-button {
@@ -97,6 +104,8 @@
     cursor: pointer;
     min-width: 40px;
     transform: rotate(3deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .chat-list {
@@ -107,7 +116,6 @@
     flex-direction: column;
     gap: 15px;
     background-color: rgba(0, 0, 0, 0.6);
-    /* Уродливый скроллбар */
     scrollbar-width: thick;
     scrollbar-color: #ff00ff #00ffff;
   }
@@ -212,7 +220,7 @@
   }
   
   .chat-name {
-    font-size: 16px;
+    font-size: 18px;
     color: #ffff00;
     margin: 0;
     font-weight: bold;
@@ -221,6 +229,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     transform: skew(-5deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    letter-spacing: 1px;
   }
   
   .last-message-time {
@@ -229,6 +239,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2px 5px;
     border-radius: 10px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .chat-preview {
@@ -241,11 +252,13 @@
     margin: 0;
     font-size: 14px;
     color: #ffffff;
-    opacity: 0.8;
+    opacity: A0.8;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .unread-count {
@@ -261,6 +274,8 @@
     font-size: 12px;
     font-weight: bold;
     border: 2px solid #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .chat-list-footer {
@@ -281,6 +296,9 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    min-height: 44px;
   }
   
   .create-chat-button:hover {
@@ -311,7 +329,7 @@
     background: url('https://via.placeholder.com/50') repeat;
     opacity: 0.1;
     z-index: 0;
-    pointer-events: none; /* Чтобы не мешало кликам */
+    pointer-events: none;
   }
   
   .chat-header {
@@ -348,22 +366,40 @@
     color: #ffff00;
     margin: 0 0 5px;
     text-shadow: 2px 2px 0 #000000;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .chat-header-status {
     font-size: 14px;
     margin: 0;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .online-text {
     color: #00ff00;
     font-weight: bold;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .last-seen-text {
     color: #00ffff;
     font-style: italic;
     opacity: 0.8;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px 8px;
+    border-radius: 5px;
+    display: inline-block;
   }
   
   .chat-actions {
@@ -401,23 +437,31 @@
   }
   
   .blocked-title {
-    font-size: 22px;
+    font-size: 24px;
     color: #ffff00;
     margin: 0 0 10px;
     text-shadow: 2px 2px 0 #000000;
     letter-spacing: 2px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
   }
   
   .blocked-message {
     font-size: 16px;
     color: white;
     margin: 0;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    line-height: 1.5;
   }
   
   .blocked-user {
     font-weight: bold;
     color: #00ffff;
     text-decoration: line-through;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    border-radius: 5px;
   }
   
   /* Область сообщений */
@@ -430,7 +474,6 @@
     gap: 20px;
     position: relative;
     z-index: 1;
-    /* Уродливый скроллбар */
     scrollbar-width: thick;
     scrollbar-color: #ff00ff #000000;
   }
@@ -467,10 +510,12 @@
     background-color: rgba(255, 0, 255, 0.6);
     color: #ffff00;
     padding: 5px 15px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 15px;
     border: 2px solid #00ffff;
     transform: rotate(-2deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .message-bubble {
@@ -513,12 +558,20 @@
     color: white;
     font-size: 16px;
     word-wrap: break-word;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    line-height: 1.4;
   }
   
   .blocked-message-text {
     color: #ff0000;
     font-weight: bold;
     font-style: italic;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
   }
   
   .message-time {
@@ -526,6 +579,7 @@
     color: rgba(255, 255, 255, 0.7);
     display: block;
     text-align: right;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .message-status {
@@ -587,6 +641,7 @@
     border-radius: 20px;
     outline: none;
     resize: none;
+    font-family: 'Arial', 'Helvetica', sans-serif;
   }
   
   .send-button {
@@ -625,8 +680,13 @@
     font-size: 30px;
     color: #ff0000;
     margin-bottom: 20px;
-    text-shadow: 3px 3px 0 #000000;
+    text-shadow: 2px 2px 0 #000000;
     transform: rotate(-3deg);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px dashed #ffff00;
   }
   
   .no-chat-subtitle {
@@ -634,6 +694,12 @@
     color: #00ffff;
     max-width: 400px;
     transform: rotate(2deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    line-height: 1.5;
   }
   
   /* Быстрые действия */
@@ -659,6 +725,9 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    min-height: 44px;
   }
   
   .quick-action-button:hover {
@@ -683,12 +752,23 @@
     color: #ffff00;
     margin-bottom: 20px;
     text-shadow: 3px 3px 0 #000000;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
   }
   
   .error-subtitle {
     font-size: 18px;
     color: white;
     margin-bottom: 30px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    line-height: 1.5;
   }
   
   .auth-button {
@@ -704,6 +784,9 @@
     margin: 20px auto;
     display: block;
     transition: all 0.3s;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    min-height: 44px;
   }
   
   .auth-button:hover {
@@ -748,9 +831,13 @@
     font-size: 28px;
     color: #ffff00;
     margin-bottom: 20px;
-    text-shadow: 3px 3px 0 #000000;
+    text-shadow: 2px 2px 0 #000000;
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
   }
   
   .popup-close {
@@ -768,6 +855,10 @@
     cursor: pointer;
     z-index: 10;
     transition: all 0.3s;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    line-height: 40px; /* Центрирование X */
+    text-align: center;
   }
   
   .popup-close:hover {
@@ -777,7 +868,7 @@
   
   /* Общие анимации для элементов */
   .blink {
-    animation: blinker 1.2s linear infinite;
+    animation: blinker 1.5s linear infinite;
   }
   
   @keyframes blinker {
