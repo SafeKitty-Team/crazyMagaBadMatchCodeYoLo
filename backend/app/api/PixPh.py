@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, APIRouter
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 import sqlite3
 from PIL import Image
 import io
@@ -18,6 +19,19 @@ def рандом_номер_фото(length):
 
 
 router = APIRouter(tags=["ОбрФото"])
+
+def compress_image(image: Image) -> bytes:
+    image = image.resize((5, 5), Image.LANCZOS)
+    img_byte_arr = io.BytesIO()
+    image.save(img_byte_arr, format='PNG')
+    return img_byte_arr.getvalue()
+
+router.mount("/photos", StaticFiles(directory="photo"), name="photos")
+
+def рандом_номер_фото(length):
+    characters = строка.printable
+    result = ''.join(рандом.choice(characters) for _ in range(length))
+    return result
 
 def compress_image(image: Image) -> bytes:
     image = image.resize((5, 5), Image.LANCZOS)
@@ -47,14 +61,14 @@ async def upload_avatar(username: str, file: UploadFile = File(...)):
         with open(file_name, 'wb') as f:
             f.write(compressed_data)
 
-        return JSONResponse(content={"message": "Аватарка успешно загружена!"}, status_code=201)
+        url = f"http://localhost:8000/photos/{os.path.basename(file_name)}"
+        return JSONResponse(content={"message": "Аватарка успешно загружена!", "url": url}, status_code=201)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/get-avatar/{username}")
 async def get_avatar(username: str):
-    print("Пользователи:", пользователи)  # Для отладки
     if username not in пользователи:
         raise HTTPException(status_code=404, detail="Пользователь не найден")
 
@@ -65,7 +79,6 @@ async def get_avatar(username: str):
         raise HTTPException(status_code=404, detail="Изображение не найдено")
 
     return FileResponse(file_path, media_type='image/png')
-
 
 
 
