@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI as ИнтерфейсПрограмногоПриложения
 from app.auth import rourer_регистрация
+from app.api import роутер_use
 
 ИПП = ИнтерфейсПрограмногоПриложения
 
@@ -14,6 +15,10 @@ async def root():
 
 приложение.include_router(
 	rourer_регистрация,
+)
+
+приложение.include_router(
+	роутер_use,
 )
 
 if __name__ == "__main__":
