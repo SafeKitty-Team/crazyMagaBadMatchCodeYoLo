@@ -4,6 +4,7 @@ from fastapi import FastAPI as ИнтерфейсПрограмногоПрил�
 from app.api.PixPh import router as router_ОбрФото
 
 from app.auth import rourer_регистрация
+from app.api import роутер_use
 
 ИПП = ИнтерфейсПрограмногоПриложения
 
@@ -17,6 +18,10 @@ from app.auth import rourer_регистрация
 
 приложение.include_router(
 	rourer_регистрация,
+)
+
+приложение.include_router(
+	роутер_use,
 )
 
 if __name__ == "__main__":
