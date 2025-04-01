@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI as ИнтерфейсПрограмногоПриложения
-from app.api.видеть import вайфайроутер as router
+from app.api.видеть import вайфайроутер
 
 from app.api.PixPh import router as router_ОбрФото
 
@@ -23,6 +23,9 @@ from app.api import роутер_use
 	роутер_use,
 )
 
+приложение.include_router(
+	вайфайроутер,
+)
 if __name__ == "__main__":
 	uvicorn.run(
 		"главный_файл:приложение",
