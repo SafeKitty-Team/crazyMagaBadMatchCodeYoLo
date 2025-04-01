@@ -1,0 +1,405 @@
+/* Ужасные общие стили с улучшенной доступностью */
+* {
+  box-sizing: content-box !important;
+  margin: 0;
+  padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
+
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: repeating-linear-gradient(45deg, #ff00ff, #00ffff 50px, #ffff00 50px, #00ff00 100px);
+  color: red;
+  line-height: 1.8;
+  overflow-x: hidden;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.app-container {
+  width: 90%; /* Немного уменьшена ширина для лучшей доступности */
+  margin: 0 auto;
+  padding: 10px;
+  border: 12px dotted lime;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Раздражающая загрузка */
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: fuchsia;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  border: 16px solid blue;
+  border-top: 16px solid orange;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Бегущая строка */
+.announcement {
+  background-color: yellow;
+  color: purple;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 5px ridge red;
+  margin: 20px 0;
+}
+
+/* Основной контент */
+main {
+  padding: 20px;
+  border: 8px double cyan;
+  position: relative;
+  background: url('https://via.placeholder.com/100') repeat;
+  /* Добавлен отступ снизу для лучшей доступности */
+  margin-bottom: 20px;
+}
+
+.main-title {
+  font-size: 48px;
+  text-align: center;
+  letter-spacing: 8px;
+  transform: rotate(-2deg);
+  margin-bottom: 30px;
+  /* Добавлено пространство вокруг заголовка */
+  padding: 10px;
+}
+
+.main-subtitle {
+  font-size: 32px;
+  text-align: right;
+  font-style: italic;
+  color: lime;
+  margin-bottom: 40px;
+  transform: skewX(10deg);
+  /* Добавлено пространство вокруг подзаголовка */
+  padding: 5px;
+}
+
+/* Раздражающие эффекты */
+.blink {
+  animation: blinker 1.2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.rainbow-text {
+  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 4s linear infinite;
+}
+
+@keyframes rainbow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* Надоедливый попап - переработан для доступности */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ff0080;
+  padding: 30px;
+  border: 10px solid #00ff00;
+  box-shadow: 0 0 50px yellow;
+  z-index: 999;
+  text-align: center;
+  animation: popup-wobble 3s infinite;
+  /* Уменьшен размер для лучшей доступности */
+  max-width: 80%;
+  width: 300px;
+}
+
+@keyframes popup-wobble {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(-50%, -50%) rotate(3deg); }
+  50% { transform: translate(-50%, -50%) rotate(0deg); }
+  75% { transform: translate(-50%, -50%) rotate(-3deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+.popup h3 {
+  color: yellow;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.popup input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  border: 5px dashed purple;
+  background-color: #ccff00;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  color: white;
+  border: 3px solid black;
+  cursor: pointer; /* Изменено для доступности */
+  /* Увеличен размер для лучшей доступности */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.submit-btn {
+  padding: 15px 30px;
+  background-color: #ff00ff;
+  color: yellow;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer; /* Изменено для доступности */
+  animation: blinker 1.5s linear infinite;
+}
+
+/* Эффекты на элементах */
+.shake {
+  display: inline-block;
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+  10% { transform: translate(-0.5px, -1px) rotate(-0.5deg); }
+  20% { transform: translate(-1.5px, 0px) rotate(0.5deg); }
+  30% { transform: translate(1.5px, 1px) rotate(0deg); }
+  40% { transform: translate(0.5px, -0.5px) rotate(0.5deg); }
+  50% { transform: translate(-0.5px, 1px) rotate(-0.5deg); }
+  60% { transform: translate(-1.5px, 0.5px) rotate(0deg); }
+  70% { transform: translate(1.5px, 0.5px) rotate(-0.5deg); }
+  80% { transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
+  90% { transform: translate(0.5px, 1px) rotate(0deg); }
+  100% { transform: translate(0.5px, -1px) rotate(-0.5deg); }
+}
+
+.wobble {
+  display: inline-block;
+  animation: wobble 2s infinite;
+}
+
+@keyframes wobble {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.rotate {
+  display: inline-block;
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.bounce {
+  display: inline-block;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.skew {
+  display: inline-block;
+  animation: skew 3s infinite;
+}
+
+@keyframes skew {
+  0% { transform: skewX(0deg); }
+  25% { transform: skewX(15deg); }
+  50% { transform: skewX(0deg); }
+  75% { transform: skewX(-15deg); }
+  100% { transform: skewX(0deg); }
+}
+
+.tilted {
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+
+.upside-down {
+  transform: rotate(180deg);
+  display: inline-block;
+}
+
+.sideways {
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
+.glitch {
+  position: relative;
+  animation: glitch 1.5s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: none; opacity: 1; }
+  7% { transform: skew(-0.3deg, -0.5deg); opacity: 0.8; }
+  10% { transform: none; opacity: 1; }
+  27% { transform: none; opacity: 1; }
+  30% { transform: skew(0.4deg, -0.1deg); opacity: 0.8; }
+  35% { transform: none; opacity: 1; }
+  52% { transform: none; opacity: 1; }
+  55% { transform: skew(-0.5deg, 0.2deg); opacity: 0.8; }
+  50% { transform: none; opacity: 1; }
+  72% { transform: none; opacity: 1; }
+  75% { transform: skew(0.2deg, 0.5deg); opacity: 0.8; }
+  80% { transform: none; opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+.spinning-logo {
+  animation: spin 2s linear infinite;
+}
+
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: marquee 15s linear infinite;
+}
+/* Стили для компонентов аутентификации в App.css */
+
+/* Кнопка выхода */
+.logout-button {
+  background-color: #ff0000;
+  color: white;
+  border: 2px solid #ffff00;
+  padding: 5px 10px;
+  margin-left: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  animation: shake 2s infinite;
+  min-width: 60px;
+  min-height: 30px;
+}
+
+.logout-button:hover {
+  background-color: #990000;
+  transform: scale(1.1);
+}
+
+/* Кнопка входа */
+.login-button {
+  background-color: #00ff00;
+  color: #000000;
+  border: 2px solid #ff00ff;
+  padding: 5px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  min-width: 80px;
+  min-height: 35px;
+}
+
+.login-button:hover {
+  background-color: #ff00ff;
+  color: white;
+  transform: scale(1.1) rotate(3deg);
+}
+
+/* Сообщение для неавторизованных пользователей */
+.unauthorized-message {
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 5px dashed #ffff00;
+  padding: 30px;
+  text-align: center;
+  margin: 20px 0;
+  animation: wobble 3s infinite;
+}
+
+.unauthorized-message h2 {
+  color: #ff0000;
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 0 #000000;
+}
+
+.unauthorized-message p {
+  color: #00ffff;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.unauthorized-message .auth-button {
+  background-color: #ff00ff;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+  border: 3px double #00ffff;
+  min-width: 250px;
+  min-height: 50px;
+}
+
+.unauthorized-message .auth-button:hover {
+  background-color: #00ffff;
+  color: #000000;
+  transform: scale(1.1);
+}
+
+.warning-text {
+  color: #ff6600;
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Кнопка для тестовой авторизации */
+.test-auth-button {
+  background-color: #666666;
+  color: white;
+  border: 2px dashed #ff00ff;
+  padding: 10px 20px;
+  margin-top: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.8;
+  min-width: 200px;
+  min-height: 40px;
+}
+
+.test-auth-button:hover {
+  opacity: 1;
+  background-color: #333333;
+}

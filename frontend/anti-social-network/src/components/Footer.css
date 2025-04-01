@@ -1,0 +1,226 @@
+.footer {
+    background-color: #330066;
+    color: #00ffff;
+    padding: 30px 20px;
+    margin-top: 50px;
+    border-top: 10px ridge #ff00ff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/50') repeat;
+    opacity: 0.15;
+    z-index: 0;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+  
+  /* Секция логотипа */
+  .footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .footer-title {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #ff00ff;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  .footer-slogan {
+    font-size: 16px;
+    color: #00ff00;
+    font-style: italic;
+  }
+  
+  /* Секция ссылок */
+  .footer-heading {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #ffff00;
+    text-decoration: underline;
+  }
+  
+  .footer-links ul {
+    list-style-type: square;
+    padding-left: 20px;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-link {
+    text-decoration: none;
+    color: #ff6600;
+    font-size: 16px;
+    transition: all 0.3s;
+    position: relative;
+  }
+  
+  .footer-link:hover {
+    color: #00ffff;
+    text-decoration: line-through;
+  }
+  
+  .footer-link::before {
+    content: '🚫';
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .footer-link:hover::before {
+    opacity: 1;
+  }
+  
+  /* Секция контактов */
+  .contact-info {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #cccccc;
+  }
+  
+  /* Секция подписки */
+  .subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .subscribe-input {
+    padding: 12px;
+    border: 3px dashed #ff00ff;
+    background-color: #000000;
+    color: #00ff00;
+    font-size: 16px;
+  }
+  
+  .subscribe-button {
+    padding: 12px 20px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+  
+  /* Нижняя часть футера */
+  .footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 3px dotted #ff00ff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Социальные иконки */
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icon {
+    display: inline-block;
+    font-size: 24px;
+    color: white;
+    width: 40px;
+    height: 40px;
+    background-color: #9900cc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s;
+  }
+  
+  .social-icon:hover {
+    transform: scale(1.1) rotate(20deg);
+  }
+  
+  /* Копирайт */
+  .copyright {
+    font-size: 14px;
+    color: #999999;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0 20px;
+  }
+  
+  /* Дисклеймер и куки */
+  .footer-disclaimer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .cookie-button {
+    padding: 10px 15px;
+    background-color: #ff6600;
+    color: white;
+    border: 2px solid #ffff00;
+    font-size: 14px;
+    cursor: pointer;
+    animation: pulse 3s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+    }
+    
+    .footer-section {
+      margin-bottom: 20px;
+      min-width: 100%;
+    }
+    
+    .footer-bottom {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+    
+    .social-icons {
+      justify-content: center;
+    }
+    
+    .footer-disclaimer {
+      justify-content: center;
+    }
+  }
