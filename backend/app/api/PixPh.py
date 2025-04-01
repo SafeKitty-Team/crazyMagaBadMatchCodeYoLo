@@ -33,6 +33,7 @@ def рандом_номер_фото(length):
     result = ''.join(рандом.choice(characters) for _ in range(length))
     return result
 
+
 def compress_image(image: Image) -> bytes:
     image = image.resize((5, 5), Image.LANCZOS)
     img_byte_arr = io.BytesIO()
