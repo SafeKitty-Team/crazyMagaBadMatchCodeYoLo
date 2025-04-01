@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>АнТи-СОЦ СЕТЬ</title>
+    <!-- Добавление неиспользуемых, но раздражающих стилей (исправлено для доступности) -->
+    <style>
+      /* Мигающий фон, но медленнее */
+      body {
+        animation: blink-background 5s infinite;
+        /* Уменьшаем масштаб страницы для лучшей доступности */
+        transform: scale(0.9);
+        transform-origin: center top;
+        margin: 0 auto;
+        max-width: 1400px;
+      }
+      
+      @keyframes blink-background {
+        0% { background-position: 0 0; }
+        50% { background-position: 100px 100px; }
+        100% { background-position: 0 0; }
+      }
+      
+      /* Ужасный курсор для всей страницы, но менее интенсивный */
+      * {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><circle cx="7.5" cy="7.5" r="4" fill="red"/></svg>'), auto !important;
+      }
+      
+      /* Наклон для всех элементов при наведении, но меньший */
+      *:hover {
+        transform: skew(3deg, 3deg);
+        transition: transform 0.3s;
+      }
+      
+      /* Убираем слишком большую минимальную ширину, которая вызывала горизонтальную прокрутку */
+      html, body {
+        min-width: auto;
+        overflow-x: hidden;
+      }
+      
+      /* Добавляем небольшие отступы для лучшей доступности кликабельных элементов */
+      button, a, input[type="submit"] {
+        margin: 3px;
+        padding: 5px;
+      }
+      
+      /* Увеличиваем область клика для маленьких элементов */
+      .nav-link, .footer-link, .post-button, .like-button, .dislike-button, .comment-button {
+        min-height: 35px;
+        min-width: 35px;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-DIYD7xp5.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BH3vhcoq.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Вспомогательные бесполезные скрипты (реже выполняются) -->
+    <script>
+      // Изменение заголовка страницы каждые 10 секунд
+      setInterval(() => {
+        const titles = [
+          'АнТи-СОЦ СЕТЬ - Худшая соцсеть!',
+          'ОСТОРОЖНО!!! Не нажимайте на ссылки!',
+          'ВНИМАНИЕ! Возможна потеря данных!',
+          'Вернитесь! Вы нам нужны!',
+          'Внимание! Обнаружены проблемы!'
+        ];
+        document.title = titles[Math.floor(Math.random() * titles.length)];
+      }, 10000);
+      
+      // Предупреждение при попытке закрыть страницу
+      window.addEventListener('beforeunload', (e) => {
+        e.preventDefault();
+        e.returnValue = 'Вы уверены, что хотите покинуть АнТи-СОЦ? Вы потеряете все свои неданные!';
+      });
+      
+      // Случайное изменение цвета фона (реже)
+      setInterval(() => {
+        const randomColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        document.body.style.backgroundColor = randomColor;
+        setTimeout(() => {
+          document.body.style.backgroundColor = '';
+        }, 200);
+      }, 60000);
+    </script>
+    
+  </body>
+</html>

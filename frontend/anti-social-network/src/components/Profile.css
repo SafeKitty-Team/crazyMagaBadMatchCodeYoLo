@@ -1,0 +1,871 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: repeating-linear-gradient(45deg, #ff00cc, #9900ff 50px, #00ffcc 50px, #00ccff 100px);
+    border: 15px double #ff0000;
+    box-shadow: 0 0 30px #ff00ff, 0 0 60px #00ffff;
+    animation: pulse-bg 8s infinite;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  @keyframes pulse-bg {
+    0% { background-position: 0 0; }
+    50% { background-position: 100px 100px; }
+    100% { background-position: 0 0; }
+  }
+  
+  .profile-title {
+    font-size: 36px;
+    text-align: center;
+    color: #ffff00;
+    text-shadow: 
+      3px 3px 0 #ff0000,
+      -3px -3px 0 #0000ff,
+      5px 5px 5px rgba(0, 0, 0, 0.5);
+    transform: rotate(-3deg);
+    margin-bottom: 40px;
+    letter-spacing: 5px;
+    background-color: #000000;
+    padding: 15px;
+    border: 8px ridge #00ff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  /* Левая колонка профиля */
+  .profile-left {
+    flex: 1;
+    min-width: 300px;
+    background-color: rgba(153, 0, 204, 0.7);
+    padding: 20px;
+    border: 10px ridge #00ffff;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    position: relative;
+    animation: shake-subtle 5s infinite;
+    transform-origin: center;
+  }
+  
+  @keyframes shake-subtle {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(5px) rotate(1deg); }
+    50% { transform: translateX(-5px) rotate(-1deg); }
+    75% { transform: translateX(3px) rotate(0.5deg); }
+  }
+  
+  /* Аватар профиля */
+  .profile-avatar-container {
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 10;
+  }
+  
+  .profile-avatar-wrapper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border: 8px dashed #ff0000;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: rotate-border 10s linear infinite;
+  }
+  
+  @keyframes rotate-border {
+    0% { border-width: 8px 8px 8px 8px; }
+    25% { border-width: 2px 12px 8px 4px; }
+    50% { border-width: 8px 4px 2px 12px; }
+    75% { border-width: 12px 2px 4px 8px; }
+    100% { border-width: 8px 8px 8px 8px; }
+  }
+  
+  .profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: hue-rotate(0deg);
+    animation: hue-rotation 5s linear infinite;
+  }
+  
+  @keyframes hue-rotation {
+    0% { filter: hue-rotate(0deg) contrast(120%); }
+    50% { filter: hue-rotate(180deg) contrast(150%); }
+    100% { filter: hue-rotate(360deg) contrast(120%); }
+  }
+  
+  .avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 0, 255, 0.7);
+    color: #ffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px #000000;
+    transform: rotate(-5deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  .profile-avatar-wrapper:hover .avatar-overlay {
+    opacity: 1;
+  }
+  
+  /* Форма изменения аватара */
+  .avatar-change-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: #ff00ff;
+    padding: 20px;
+    border: 5px dashed #ffff00;
+    z-index: 100;
+    box-shadow: 0 0 30px #00ffff;
+  }
+  
+  .form-title {
+    color: #ffff00;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-shadow: 2px 2px 0 #0000ff;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .avatar-error {
+    background-color: #ff0000;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 2px solid black;
+    text-align: center;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .form-errors {
+    margin-bottom: 15px;
+  }
+  
+  .form-error-item {
+    background-color: #ff3300;
+    color: white;
+    padding: 8px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    border: 2px dotted #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .avatar-input {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    border: 3px dashed #00ffff;
+    color: #00ff00;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  .avatar-help {
+    font-size: 14px;
+    color: #ffcc00;
+    margin-bottom: 15px;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .avatar-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .avatar-submit, .avatar-cancel {
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    min-width: 120px;
+    border: 3px solid #000000;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .avatar-submit {
+    background-color: #00ff00;
+    color: #ff00ff;
+  }
+  
+  .avatar-cancel {
+    background-color: #ff3300;
+    color: white;
+  }
+  
+  /* Информация профиля */
+  .profile-info {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 5px dotted #00ff00;
+    margin-bottom: 20px;
+  }
+  
+  .profile-username {
+    font-size: 32px;
+    color: #ff00ff;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #00ffff;
+    letter-spacing: 3px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .profile-email {
+    color: #ffcc00;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .profile-date {
+    color: #00ffff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  /* Статус пользователя */
+  .profile-status-container {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .profile-status {
+    padding: 15px;
+    background-color: #330066;
+    border: 3px dashed #ff00ff;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .profile-status:hover {
+    transform: scale(1.03) rotate(1deg);
+    border-color: #00ffff;
+  }
+  
+  .status-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .status-edit-hint {
+    font-size: 14px;
+    color: #cccccc;
+    font-style: italic;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  /* Форма редактирования статуса */
+  .status-edit-form {
+    margin-top: 10px;
+  }
+  
+  .status-edit-input {
+    width: 100%;
+    padding: 10px;
+    background-color: #000000;
+    color: #00ff00;
+    border: 3px solid #ff00ff;
+    font-size: 16px;
+    height: 80px;
+    margin-bottom: 10px;
+    resize: none;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  .status-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .status-save-btn, .status-cancel-btn {
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 48%;
+    border: 2px solid #000000;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .status-save-btn {
+    background-color: #00ff00;
+    color: #000000;
+  }
+  
+  .status-cancel-btn {
+    background-color: #ff3300;
+    color: white;
+  }
+  
+  /* Статистика профиля */
+  .profile-stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background-color: rgba(255, 0, 0, 0.7);
+    padding: 15px;
+    border: 4px ridge #ffff00;
+  }
+  
+  .profile-stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .stats-count {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .stats-label {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  /* Интересы пользователя */
+  .profile-interests {
+    width: 100%;
+    background-color: rgba(0, 204, 153, 0.7);
+    padding: 15px;
+    border: 5px solid #ff00ff;
+  }
+  
+  .interests-title {
+    color: #ff0000;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 0 #000000;
+    transform: skew(-5deg);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .interests-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .interest-item {
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: rgba(255, 0, 255, 0.5);
+    color: #ffff00;
+    font-weight: bold;
+    border: 2px dotted #00ffff;
+    text-align: center;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .interest-item:nth-child(odd) {
+    transform: rotate(-2deg);
+  }
+  
+  .interest-item:nth-child(even) {
+    transform: rotate(2deg);
+  }
+  
+  /* Когда у вас нет интересов */
+  .no-interests {
+    color: #ff0000;
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+    background-color: #000000;
+    border: 2px dashed #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  /* Правая колонка профиля */
+  .profile-right {
+    flex: 2;
+    min-width: 300px;
+    background-color: rgba(0, 0, 153, 0.7);
+    padding: 20px;
+    border: 10px groove #ff00ff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .posts-title {
+    font-size: 28px;
+    color: #00ff00;
+    text-align: center;
+    margin-bottom: 20px;
+    text-decoration: underline wavy #ff00ff;
+    text-shadow: 2px 2px 0 #000000;
+    background-color: #330066;
+    padding: 10px;
+    border: 5px dashed #ffff00;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .no-posts {
+    background-color: #333333;
+    color: #ff3300;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 3px dashed #ff00ff;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  /* Карточки постов пользователя */
+  .user-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  .user-posts::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  .user-posts::-webkit-scrollbar-track {
+    background-color: #330066;
+    border: 3px solid #00ffff;
+  }
+  
+  .user-posts::-webkit-scrollbar-thumb {
+    background-color: #ff00ff;
+    border-radius: 5px;
+    border: 2px dashed #ffff00;
+  }
+  
+  .post-card {
+    background-color: rgba(51, 51, 51, 0.8);
+    border: 6px ridge #ff3300;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    animation: rotate-subtle 10s infinite;
+  }
+  
+  @keyframes rotate-subtle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(0.5deg); }
+    50% { transform: rotate(-0.5deg); }
+    75% { transform: rotate(0.3deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  .post-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/50') repeat;
+    opacity: 0.05;
+    z-index: 0;
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 3px dotted #ff00ff;
+    padding-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .post-date {
+    font-size: 14px;
+    color: #00ffff;
+    background-color: #330066;
+    padding: 5px 10px;
+    border: 2px solid #ff00ff;
+    transform: rotate(-3deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  .post-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .post-delete-btn, .post-edit-btn {
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 2px solid #000000;
+    min-width: 80px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    font-weight: bold;
+  }
+  
+  .post-delete-btn {
+    background-color: #ff0000;
+    color: white;
+  }
+  
+  .post-edit-btn {
+    background-color: #ff9900;
+    color: #330066;
+  }
+  
+  .post-content {
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .post-text {
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .post-image-container {
+    margin-top: 15px;
+    border: 5px solid #00ff00;
+    overflow: hidden;
+  }
+  
+  .post-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    transition: all 0.5s;
+  }
+  
+  .post-image:hover {
+    transform: scale(1.05);
+    filter: hue-rotate(180deg);
+  }
+  
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 3px dotted #ff00ff;
+    padding-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .post-stats {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .post-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .stat-icon {
+    font-size: 18px;
+  }
+  
+  .stat-count {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffff00;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 3px 5px;
+    border-radius: 3px;
+  }
+  
+  .post-share-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #990099;
+    color: white;
+    border: 2px solid #00ffff;
+    cursor: pointer;
+    transform: skew(-5deg);
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    min-height: 40px;
+  }
+  
+  /* Форма создания нового поста */
+  .new-post-form {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(51, 0, 102, 0.8);
+    border: 8px double #ff00ff;
+  }
+  
+  .new-post-title {
+    font-size: 22px;
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #000000;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .new-post-input {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    background-color: #000000;
+    color: #00ff00;
+    border: 4px dashed #ff00ff;
+    font-size: 16px;
+    margin-bottom: 15px;
+    resize: none;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+  }
+  
+  .post-form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .new-post-submit, .attach-image-btn {
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid #000000;
+    flex: 1;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    font-size: 16px;
+    min-height: 44px;
+  }
+  
+  .new-post-submit {
+    background-color: #ff00ff;
+    color: #ffff00;
+    text-transform: uppercase;
+  }
+  
+  .attach-image-btn {
+    background-color: #00ccff;
+    color: #330066;
+  }
+  
+  /* Стили для раздражающей рекламы */
+  .annoying-ad {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+    width: 350px;
+    background-color: #ff00ff;
+    padding: 20px;
+    border: 10px ridge #ffff00;
+    z-index: 999;
+    box-shadow: 0 0 50px rgba(255, 0, 255, 0.8);
+  }
+  
+  .ad-close-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    background-color: #ff0000;
+    color: white;
+    border: 3px solid #ffff00;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 16px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    line-height: 24px; /* Центрирование X */
+    text-align: center;
+  }
+  
+  .ad-title {
+    font-size: 28px;
+    color: #ffff00;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 0 #ff0000;
+    letter-spacing: 3px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+  
+  .ad-text {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+    line-height: 1.4;
+  }
+  
+  .ad-image-container {
+    margin-bottom: 15px;
+    border: 5px dashed #00ffff;
+    overflow: hidden;
+  }
+  
+  .ad-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    animation: hue-rotate 3s linear infinite;
+  }
+  
+  @keyframes hue-rotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+  
+  .ad-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #00ff00;
+    color: #ff00ff;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    animation: pulse-button 2s infinite;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    text-shadow: 1px 1px 0 #000000;
+  }
+  
+  @keyframes pulse-button {
+    0% { transform: scale(1); background-color: #00ff00; }
+    50% { transform: scale(1.05); background-color: #ffff00; }
+    100% { transform: scale(1); background-color: #00ff00; }
+  }
+  
+  /* Адаптивность для мобильных устройств */
+  @media (max-width: 768px) {
+    .profile-content {
+      flex-direction: column;
+    }
+    
+    .profile-left, .profile-right {
+      min-width: 100%;
+    }
+    
+    .profile-title {
+      font-size: 32px;
+    }
+    
+    .post-footer {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .post-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .post-form-actions {
+      flex-direction: column;
+    }
+    
+    .avatar-change-form {
+      width: 90%;
+      max-width: 300px;
+    }
+    
+    .avatar-overlay {
+      opacity: 0.8; /* Делаем оверлей более видимым на мобильных устройствах */
+    }
+    
+    .annoying-ad {
+      width: 90%;
+      max-width: 320px;
+    }
+  }
