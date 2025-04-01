@@ -1,5 +1,6 @@
 import random
 from fastapi import APIRouter as апироутер
+from fastapi import Body
 from backend.app.db.базаданных import пользователи, посты, смски
 
 вайфайроутер = апироутер()
@@ -22,9 +23,10 @@ def получитьслучсмс(никюзера):
 
 
 @вайфайроутер.post("/add_messege_q", tags=['смски'])
-def добавитьсмску(password_from: str,
-                  pass_for: str,
-                  sms: str):
+def добавитьсмску(password_from: str = Body(...),
+                  pass_for: str = Body(...),
+                  sms: str = Body(...)
+                  ):
     global смски
     смски.append({(password_from, pass_for): sms})
 
