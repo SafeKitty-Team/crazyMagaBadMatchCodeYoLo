@@ -2,17 +2,12 @@ import uvicorn
 from fastapi import FastAPI as ИнтерфейсПрограмногоПриложения
 from app.api.видеть import вайфайроутер as router
 
+from app.api.PixPh import router as router_ОбрФото
+
+from app.auth import rourer_регистрация
+from app.api import роутер_use
+
 ИПП = ИнтерфейсПрограмногоПриложения
 
 приложение = ИПП()
 
-приложение.include_router(router)
-
-
-@приложение.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-if __name__ == '__main__':
-    uvicorn.run('главный_файл:приложение', reload=True)
